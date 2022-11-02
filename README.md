@@ -70,7 +70,7 @@ php artisan serve
 Run client-side app
 
 ```bash
-npm run dev
+npm run hot
 ```
 
 ## Admin Account
