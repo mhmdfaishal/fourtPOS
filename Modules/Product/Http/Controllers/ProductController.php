@@ -62,10 +62,10 @@ class ProductController extends Controller
         $product->user_id = auth()->user()->id;
         $product->save();
 
-        if ($request->hasFile('image')) {
-            $filename = now()->timestamp . '.' . trim($request->file('image')->getClientOriginalExtension());
-            $product->addMedia(Storage::path('temp/dropzone/' . $request->file('image')->getClientOriginalName()))->toMediaCollection('images');
-        }
+        // if ($request->hasFile('image')) {
+        //     $filename = now()->timestamp . '.' . trim($request->file('image')->getClientOriginalExtension());
+        //     $product->addMedia(Storage::path('temp/dropzone/' . $request->file('image')->getClientOriginalName()))->toMediaCollection('images');
+        // }
         return redirect()->route('product.index');
     }
 
