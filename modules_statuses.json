@@ -1,0 +1,8 @@
+{
+    "Product": true,
+    "Sale": true,
+    "Purchase": true,
+    "User": true,
+    "Upload": true,
+    "Report": true
+}

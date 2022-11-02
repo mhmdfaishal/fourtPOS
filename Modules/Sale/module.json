@@ -1,0 +1,11 @@
+{
+    "name": "Sale",
+    "alias": "sale",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Sale\\Providers\\SaleServiceProvider"
+    ],
+    "files": []
+}
