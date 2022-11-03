@@ -23,10 +23,10 @@ class SaleController extends Controller
      */
     public function index()
     {
-        abort_if(Gate::denies('access_sales'), 403);
+        // abort_if(Gate::denies('access_sales'), 403);
         $getAllSales = Sale::latest()->get();
 
-        // return Inertia::render('Sale/Index', ['data' => $getAllSales]);
+        return Inertia::render('Sales/Index', ['sales' => $getAllSales]);
     }
 
     /**
@@ -35,8 +35,8 @@ class SaleController extends Controller
      */
     public function create()
     {
-        abort_if(Gate::denies('create_sales'), 403);
-        // return Inertia::render('Sale/Create');
+        // abort_if(Gate::denies('create_sales'), 403);
+        // return Inertia::render('Sales/Create');
     }
 
     /**
@@ -100,6 +100,8 @@ class SaleController extends Controller
                 ]);
             }
         });
+
+        return redirect()->route('sales.index')->with('success', 'Sale created successfully.');
     }
 
     /**
@@ -109,11 +111,11 @@ class SaleController extends Controller
      */
     public function show($id)
     {
-        abort_if(Gate::denies('show_sales'), 403);
+        // abort_if(Gate::denies('show_sales'), 403);
 
         $getSaleById = Sale::findOrFail($id);
 
-        // return Inertia::render('Sale/Show', ['data' => $getSaleById]);
+        // return Inertia::render('Sales/Show', ['data' => $getSaleById]);
     }
 
     /**
@@ -123,7 +125,7 @@ class SaleController extends Controller
      */
     public function edit(Sale $sale)
     {
-        abort_if(Gate::denies('edit_sales'), 403);
+        // abort_if(Gate::denies('edit_sales'), 403);
 
         $sale_details = $sale->saleDetails;
 
@@ -146,7 +148,7 @@ class SaleController extends Controller
             ]);
         }
 
-        // return Inertia::render('Sale/Edit', ['data' => $sale]);
+        // return Inertia::render('Sales/Edit', ['data' => $sale]);
     }
 
     /**
@@ -216,7 +218,7 @@ class SaleController extends Controller
             Cart::instance('sale')->destroy();
         });
 
-        // return redirect()->route('sale.index');
+        return redirect()->route('sales.index');
     }
 
     /**
@@ -226,10 +228,10 @@ class SaleController extends Controller
      */
     public function destroy(Sale $sale)
     {
-        abort_if(Gate::denies('delete_sales'), 403);
+        // abort_if(Gate::denies('delete_sales'), 403);
 
         $sale->delete();
 
-        // return redirect()->route('sale.index');
+        return redirect()->route('sales.index');
     }
 }

@@ -15,25 +15,25 @@ class SalePaymentsController extends Controller
 {
 
     public function index($sale_id) {
-        abort_if(Gate::denies('access_sale_payments'), 403);
+        // abort_if(Gate::denies('access_sale_payments'), 403);
 
         $sale = Sale::findOrFail($sale_id);
 
-        //return Inertia::render('Sale/Payments/Index', ['data' => $sale->payments]);
+        return Inertia::render('Sales/Payments/Index', ['data' => $sale->payments]);
     }
 
 
     public function create($sale_id) {
-        abort_if(Gate::denies('access_sale_payments'), 403);
+        // abort_if(Gate::denies('access_sale_payments'), 403);
 
         $sale = Sale::findOrFail($sale_id);
 
-        //return Inertia::render('Sale/Payments/Create', ['sale' => $sale]);
+        // return Inertia::render('Sales/Payments/Create', ['sale' => $sale]);
     }
 
 
     public function store(Request $request) {
-        abort_if(Gate::denies('access_sale_payments'), 403);
+        // abort_if(Gate::denies('access_sale_payments'), 403);
 
         $request->validate([
             'date' => 'required|date',
@@ -76,16 +76,16 @@ class SalePaymentsController extends Controller
 
 
     public function edit($sale_id, SalePayment $salePayment) {
-        abort_if(Gate::denies('access_sale_payments'), 403);
+        // abort_if(Gate::denies('access_sale_payments'), 403);
 
         $sale = Sale::findOrFail($sale_id);
 
-        //return Inertia::render('Sale/Payments/Edit', ['sale' => $sale, 'payment' => $salePayment]);
+        // return Inertia::render('Sales/Payments/Edit', ['sale' => $sale, 'payment' => $salePayment]);
     }
 
 
     public function update(Request $request, SalePayment $salePayment) {
-        abort_if(Gate::denies('access_sale_payments'), 403);
+        // abort_if(Gate::denies('access_sale_payments'), 403);
 
         $request->validate([
             'date' => 'required|date',
@@ -124,15 +124,15 @@ class SalePaymentsController extends Controller
         });
 
 
-        //return redirect()->route('sales.index');
+        return redirect()->route('sales.index');
     }
 
 
     public function destroy(SalePayment $salePayment) {
-        abort_if(Gate::denies('access_sale_payments'), 403);
+        // abort_if(Gate::denies('access_sale_payments'), 403);
 
         $salePayment->delete();
 
-        // return redirect()->route('sales.index');
+        return redirect()->route('sales.index');
     }
 }
