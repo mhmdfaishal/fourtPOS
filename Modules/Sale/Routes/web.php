@@ -2,6 +2,7 @@
 
 use Modules\Sale\Http\Controllers\SaleController;
 use Modules\Sale\Http\Controllers\SalePaymentsController;
+use Modules\Sale\Http\Controllers\POSController;
 use Modules\Sale\Entities\Sale;
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/destroy/{salePayment}', [SalePaymentsController::class, 'destroy'])->name('sale-payments.destroy');
     });
 
+    Route::get('pos', POSController::class)->name('list.merchant');
+    Route::get('pos/{id}', [POSController::class, 'showMerchant'])->name('show.merchant');
     //Generate PDF
     Route::get('/sales/pdf/{id}', function ($id) {
         $sale = Sale::findOrFail($id);
