@@ -26809,3 +26809,7 @@ input[type="search"] {
   background-image: url(/public/img/card-merchant.png) !important;
   background-size: cover !important;
 }
+
+.card-price{
+  color: #238700;
+}

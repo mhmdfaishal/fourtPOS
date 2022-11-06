@@ -90,15 +90,15 @@ export default function SidebarRight() {
                         <ul className="navbar-nav list-item-cart">
                             <li className="nav-item d-flex">
                                 <img src="/img/cheesecake.jpg" alt="item-cart" className='img-item-cart' />
-                                <div className='d-flex flex-column ps-3'>
+                                <div className='d-flex flex-column ps-3 w-100'>
                                     <h6 className="text-dark mb-0">
                                         Cheesecake
                                     </h6>
                                     <h6 className="text-dark mb-0">
                                         {convertToIDR(price_1)}
                                     </h6>
-                                    <div className="btn-set-quantity d-flex align-items-center mt-2 mb-3">
-                                        <button className="btn btn-icon btn-primary py-2 m-0" type="button" onClick={
+                                    <div className="btn-set-quantity d-flex align-items-center mt-2 mb-3 ms-5">
+                                        <button className="btn btn-icon btn-primary mx-0 py-2 m-0" type="button" onClick={
                                                                                                             (e) => {substractQuantity(e,1)}
                                                                                                             }>
                                             <span className="btn-inner-icon"><i className="fas fa-minus"></i></span>
@@ -114,14 +114,14 @@ export default function SidebarRight() {
                             </li>
                             <li className="nav-item d-flex">
                                 <img src="/img/cheesecake.jpg" alt="item-cart" className='img-item-cart' />
-                                <div className='d-flex flex-column ps-3'>
+                                <div className='d-flex flex-column ps-3 w-100'>
                                 <h6 className="text-dark mb-0">
                                         Cheesecake
                                     </h6>
                                     <h6 className="text-dark mb-0">
                                         {convertToIDR(price_2)}
                                     </h6>
-                                    <div className="btn-set-quantity d-flex align-items-center mt-2 mb-3">
+                                    <div className="btn-set-quantity d-flex align-items-center mt-2 mb-3 ms-5">
                                         <button className="btn btn-icon btn-primary py-2 m-0" type="button" onClick={
                                                                                                             (e) => {substractQuantity(e,2)}
                                                                                                             }>
