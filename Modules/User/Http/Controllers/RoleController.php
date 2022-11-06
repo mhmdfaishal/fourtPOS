@@ -6,6 +6,7 @@ use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Resources\RolesResource;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
@@ -13,13 +14,20 @@ class RoleController extends Controller
     public function index() {
         abort_if(Gate::denies('access_user_management'), 403);
 
-        $roles = Role::all();
+        $roles = RolesResource::collection(Role::with(['permissions' => function ($query) {
+            $query->select('name')->get();
+            }])->orderBy('created_at', 'asc')->paginate(10));
+
+        return inertia('Roles/Index', [
+            'roles' => $roles,
+        ]);
 
     }
 
     public function create() {
         abort_if(Gate::denies('access_user_management'), 403);
 
+        return inertia('Roles/Create');
     }
 
 
@@ -37,14 +45,23 @@ class RoleController extends Controller
 
         $role->givePermissionTo($request->permissions);
 
-
+        return redirect()->route('roles.index')->with([
+            'type' => 'success',
+            'message' => 'Role has been created',
+        ]);
     }
 
 
     public function edit(Role $role) {
         abort_if(Gate::denies('access_user_management'), 403);
 
-
+        // $role->load('permissions');
+        // get all permissions name and put it in array
+        $permissions = $role->permissions->pluck('name')->toArray();
+        return inertia('Roles/Edit', [
+            'role' => $role,
+            'permissions' => $permissions
+        ]);
     }
 
 
@@ -62,6 +79,10 @@ class RoleController extends Controller
 
         $role->syncPermissions($request->permissions);
 
+        return redirect()->route('roles.index')->with([
+            'type' => 'success',
+            'message' => 'Role has been updated',
+        ]);
     }
 
 
@@ -69,6 +90,9 @@ class RoleController extends Controller
         abort_if(Gate::denies('access_user_management'), 403);
 
         $role->delete();
-
+        return redirect()->route('roles.index')->with([
+            'type' => 'success',
+            'message' => 'Role has been deleted',
+        ]);
     }
 }

@@ -3,51 +3,43 @@ import React, { useState } from 'react'
 import Dialog from '../../Components/Dashboard/Dialog';
 import Base from '../../Layouts/Base'
 import useDialog from '../../Hooks/useDialog';
-import CreateUser from '../../Components/Dashboard/Users/CreateUser';
-import EditUser from '../../Components/Dashboard/Users/EditUser';
 import { Inertia } from '@inertiajs/inertia';
 
 export default function Index(props) {
 
-    const {data: users, links, meta} = props.users; 
-    const {data: roles} = props.roles; 
+    const {data: roles, links, meta} = props.roles; 
 
     const [state, setState] = useState([])
-    const [addDialogHandler, addCloseTrigger,addTrigger] = useDialog()
-    const [UpdateDialogHandler, UpdateCloseTrigger,UpdateTrigger] = useDialog()
     const [destroyDialogHandler, destroyCloseTrigger,destroyTrigger] = useDialog()
-    const openUpdateDialog = (user) => {
-        setState(user);
-        UpdateDialogHandler()
-    }
 
-    const openDestroyDialog = (user) => {
-        setState(user);
+    const openDestroyDialog = (role) => {
+        setState(role);
         destroyDialogHandler()        
     };
 
-    const destroyUser = () => {
+    const createPage = () => {
+        Inertia.get(route('roles.create'));
+    }
+
+    const editPage = (role) => {
+        Inertia.get(route('roles.edit', role.id));
+    }
+
+    const destroyRole = () => {
         Inertia.delete(
-            route('users.destroy', state.id), 
+            route('roles.destroy', state.id), 
             { onSuccess: () => destroyCloseTrigger() });
     }
 
     return (
         <>
             <div className="container-fluid py-4">
-                <Dialog trigger={addTrigger} title="Create New User"> 
-                    <CreateUser close={addCloseTrigger} roles={roles}/>
-                </Dialog>
 
-                <Dialog trigger={UpdateTrigger} title={`Update User: ${state.name}`}> 
-                    <EditUser model={state} roles={roles} close={UpdateCloseTrigger}/>
-                </Dialog>
-
-                <Dialog trigger={destroyTrigger} title={`Delete User: ${state.name}`}>
-                    <p>Are you sure to delete this user ?</p>
+                <Dialog trigger={destroyTrigger} title={`Delete Role: ${state.name}`}>
+                    <p>Are you sure to delete this role ? user with this role will have empty role</p>
                     <div className="modal-footer">
                         <button type="button" className="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" onClick={destroyUser} className="btn bg-gradient-danger">Delete</button>
+                        <button type="submit" onClick={() => destroyRole()}  className="btn bg-gradient-danger">Delete</button>
                     </div>
                 </Dialog>
 
@@ -57,11 +49,11 @@ export default function Index(props) {
                             <div className="card-header pb-0">
                             <div className="row">
                                 <div className="col-md-6">
-                                    <h6>Users table</h6>
+                                    <h6>Roles table</h6>
                                 </div>
                                 <div className="col-md-6 d-flex justify-content-end">
-                                    <button onClick={addDialogHandler} type="button" className="btn btn-teal-orange btn-block mb-3" data-bs-toggle="modal" data-bs-target="#exampleModalMessage">
-                                        Create New User
+                                    <button type="button"  onClick={() => createPage()} className="btn bg-gradient-success btn-block mb-3" data-bs-toggle="modal" data-bs-target="#exampleModalMessage">
+                                        Create New Role
                                     </button>
                                 </div>
                             </div>
@@ -73,48 +65,39 @@ export default function Index(props) {
                                         <tr>
                                             <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-centter">#</th>
                                             <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-left">Name</th>
-                                            <th className="text-uppercase text-secondary text-xxs font-weight-bolder text-left opacity-7 ps-2">Email</th>
-                                            <th className="text-uppercase text-secondary text-xxs font-weight-bolder text-left opacity-7 ps-2">Role</th>
-                                            <th className="text-uppercase text-secondary text-xxs font-weight-bolder text-left opacity-7 ps-2">Is Active</th>
+                                            <th className="text-uppercase text-secondary text-xxs font-weight-bolder text-left opacity-7 ps-2">Permissions</th>
                                             <th className="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {users.map((user, index) => (
-                                            <tr key={user.id}>
-                                                <td className='text-center'>{meta.from + index}</td>
+                                        {roles.map((role, index) => (
+                                            <tr key={role.id}>
+                                                <td className='text-center'>{index+1}</td>
                                                 <td className='text-left'>
                                                     <div className="d-flex px-2">
                                                         <div>
                                                             <img src="/img/team-2.jpg" className="avatar avatar-sm  me-3 " />
                                                         </div>
                                                         <div className="my-auto">
-                                                            <h6 className="mb-0 text-sm">{user.name}</h6>
+                                                            <h6 className="mb-0 text-sm">{role.name}</h6>
                                                         </div>
                                                     </div>
                                                 </td>
                                                 <td className='text-left'>
-                                                    <span className="text-xs font-weight-bold">{user.email}</span>
-                                                </td>
-                                                <td className='text-left'>
-                                                    <span className="text-xs font-weight-bold">{user.roles.length != 0 ? user.roles[0].name : ''}</span>
-                                                </td>
-                                                <td className='text-left'>
-                                                    {user.is_active ?
-                                                        <span className="text-xs font-weight-bold">Active</span>
-                                                        :
-                                                        <span className="text-xs font-weight-bold">Inactive</span>
-                                                    }
+                                                    {role.permissions.map((permission, index) => (
+                                                        index < 4 ? <span key={permission.id} className="badge bg-gradient-orange me-1">{permission.name}</span> : "."
+
+                                                    ))}
                                                 </td>
                                                 <td className="align-middle text-center" width="10%">
                                                 <div>
-                                                {user.roles.length != 0 && user.roles[0].name !== 'Super Admin' && (
+                                                {role.name !== 'Super Admin' && (
                                                     <>
-                                                    <button type="button" onClick={() => openUpdateDialog(user)} className="btn btn-vimeo btn-icon-only mx-2">
+                                                    <button type="button"  onClick={() => editPage(role)} className="btn btn-vimeo btn-icon-only mx-2">
                                                         <span className="btn-inner--icon"><i className="fas fa-pencil-alt"></i></span>
                                                     </button>
                                                     
-                                                        <button type="button" onClick={() => openDestroyDialog(user)} className="btn btn-youtube btn-icon-only">
+                                                    <button type="button"  onClick={() => openDestroyDialog(role)} className="btn btn-youtube btn-icon-only">
                                                         <span className="btn-inner--icon"><i className="fas fa-trash"></i></span>
                                                     </button>
                                                     </>
