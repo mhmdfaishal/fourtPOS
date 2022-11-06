@@ -6,6 +6,7 @@ use Modules\Product\Http\Requests\CategoryRequest;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Routing\Controller;
 use Modules\Product\Entities\Category;
+use Modules\Product\Http\Resources\CategoryResource;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -19,10 +20,8 @@ class CategoryController extends Controller
     public function index()
     {
         // abort_if(Gate::denies('access_product_categories'), 403);
-
-        $data = Category::where('user_id', auth()->user()->id)->get();
-        return Inertia::render('Category/Index', ['data' => $data]);
-        // dd($data);
+        $categories = CategoryResource::collection(Category::where('user_id', auth()->user()->id)->get());
+        return Inertia::render('Category/Index', ['categories' => $categories]);
     }
 
     /**
@@ -43,7 +42,7 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Category $category, CategoryRequest $request)
+    public function store(CategoryRequest $request, Category $category)
     {
         // abort_if(Gate::denies('access_product_categories'), 403);
 
@@ -51,7 +50,10 @@ class CategoryController extends Controller
         $category->user_id = auth()->user()->id;
         $category->save();
 
-        return redirect()->route('category.index');
+        return redirect()->route('category.index')->with([
+            'type' => 'success',
+            'message' => 'Category has been created',
+        ]);
     }
 
     /**
@@ -88,7 +90,6 @@ class CategoryController extends Controller
     public function update(Category $category, CategoryRequest $request)
     {
         // abort_if(Gate::denies('access_product_categories'), 403);
-
         $category->fill($request->only($category->getFillable()));
         if($category->isDirty()) $category->save();
         return redirect()->route('category.index');

@@ -13,7 +13,7 @@ export default function CreateCategory({close, categories}) {
     const onSubmit = (e) => {
         e.preventDefault();
         console.log(data);
-        post(route('product.create.store'), {
+        post(route('category.create.store'), {
             data,
             onSuccess: () => {
                 reset(),
@@ -39,7 +39,7 @@ export default function CreateCategory({close, categories}) {
                 </div>
                 <div className="modal-footer">
                     <button type="button" className="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" className="btn bg-gradient-primary">Save</button>
+                    <button type="submit" className="btn btn-teal-orange">Save</button>
                 </div>
             </form>
         </>
