@@ -13,7 +13,7 @@ export default function BasePOS({children, title}) {
 
     return (
         <div className="g-sidenav-show bg-gray-100">
-            <div className="min-height-1000 bg-gray-400 position-absolute w-100"></div>
+            <div className="min-height-2000 bg-gray-400 position-absolute w-100"></div>
                 <Head title={ title } />
                 <SidebarLeft />
                 <SidebarRight />

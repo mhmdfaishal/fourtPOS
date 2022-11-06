@@ -28,7 +28,7 @@ class UserRequest extends FormRequest
             'name' => 'required|string|max:255',
             'email' => ['required', 'unique:users,email,' . optional($this->user)->id,],
             'password' => ['required', 'confirmed', Password::min(8)->letters()->mixedCase()->numbers()->symbols(),],
-            'merchant_name' => 'string|max:255',
+            // 'merchant_name' => 'string|max:255',
             'role' => 'required',
             'is_active' => 'required',
         ];
