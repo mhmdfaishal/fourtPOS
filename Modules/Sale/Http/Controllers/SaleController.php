@@ -14,6 +14,7 @@ use Modules\Product\Entities\Product;
 use Modules\Sale\Http\Requests\StoreSaleRequest;
 use Modules\Sale\Http\Requests\UpdateSaleRequest;
 use Inertia\Inertia;
+use Modules\Sale\Http\Resources\SalesResource;
 
 class SaleController extends Controller
 {
@@ -24,8 +25,7 @@ class SaleController extends Controller
     public function index()
     {
         // abort_if(Gate::denies('access_sales'), 403);
-        $getAllSales = Sale::latest()->get();
-
+        $getAllSales = SalesResource::collection(Sale::latest()->paginate(10));
         return Inertia::render('Sales/Index', ['sales' => $getAllSales]);
     }
 
