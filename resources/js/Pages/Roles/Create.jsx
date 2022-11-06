@@ -71,13 +71,13 @@ export default function Create() {
                                 <div className="card-body">                                
                                     <p className="text-uppercase text-sm">Permission</p>
                                     <div className="form-group">
-                                        <div className="form-check form-switch">
+                                        <div className="form-check form-switch form-switch-role">
                                             <input type="checkbox" className="form-check-input" id="select-all" onChange={checkAllPermissions}/>
                                             <label className="form-check-label" for="select-all">Give All Permissions</label>
                                         </div>
                                     </div>
 
-                                    <div className="row">
+                                    <div className="row mb-5">
                                         {/* Dashboard Permissions */}
                                         <div className="col-lg-4 col-md-6 mb-3">
                                             <div className="card h-100 border-0 shadow">
@@ -87,7 +87,7 @@ export default function Create() {
                                                 <div className="card-body">
                                                     <div className="row">
                                                         <div className="col-12">
-                                                            <div className="form-check form-switch">
+                                                            <div className="form-check form-switch form-switch-role">
                                                                 <input type="checkbox" className="form-check-input"
                                                                         id="show_dashboard" name="permissions[]"
                                                                         value="show_dashboard" onChange={onCheck}/>
@@ -108,7 +108,7 @@ export default function Create() {
                                                 <div className="card-body">
                                                     <div className="row">
                                                         <div className="col-6">
-                                                            <div className="form-check form-switch">
+                                                            <div className="form-check form-switch form-switch-role">
                                                                 <input type="checkbox" className="form-check-input"
                                                                         id="access_user_management" name="permissions[]"
                                                                         value="access_user_management" onChange={onCheck} />
@@ -116,7 +116,7 @@ export default function Create() {
                                                             </div>
                                                         </div>
                                                         <div className="col-6">
-                                                            <div className="form-check form-switch">
+                                                            <div className="form-check form-switch form-switch-role">
                                                                 <input type="checkbox" className="form-check-input"
                                                                         id="edit_own_profile" name="permissions[]"
                                                                         value="edit_own_profile" onChange={onCheck}/>
@@ -138,7 +138,7 @@ export default function Create() {
                                                 <div className="card-body">
                                                     <div className="row">
                                                         <div className="col-6">
-                                                            <div className="form-check form-switch">
+                                                            <div className="form-check form-switch form-switch-role">
                                                                 <input type="checkbox" className="form-check-input"
                                                                         id="access_products" name="permissions[]"
                                                                         value="access_products" onChange={onCheck} />
@@ -146,7 +146,7 @@ export default function Create() {
                                                             </div>
                                                         </div>
                                                         <div className="col-6">
-                                                            <div className="form-check form-switch">
+                                                            <div className="form-check form-switch form-switch-role">
                                                                 <input type="checkbox" className="form-check-input"
                                                                         id="create_products" name="permissions[]"
                                                                         value="create_products" onChange={onCheck}/>
@@ -154,7 +154,7 @@ export default function Create() {
                                                             </div>
                                                         </div>
                                                         <div className="col-6">
-                                                            <div className="form-check form-switch">
+                                                            <div className="form-check form-switch form-switch-role">
                                                                 <input type="checkbox" className="form-check-input"
                                                                         id="show_products" name="permissions[]"
                                                                         value="show_products" onChange={onCheck}/>
@@ -162,7 +162,7 @@ export default function Create() {
                                                             </div>
                                                         </div>
                                                         <div className="col-6">
-                                                            <div className="form-check form-switch">
+                                                            <div className="form-check form-switch form-switch-role">
                                                                 <input type="checkbox" className="form-check-input"
                                                                         id="edit_products" name="permissions[]"
                                                                         value="edit_products" onChange={onCheck}/>
@@ -170,7 +170,7 @@ export default function Create() {
                                                             </div>
                                                         </div>
                                                         <div className="col-12">
-                                                            <div className="form-check form-switch">
+                                                            <div className="form-check form-switch form-switch-role">
                                                                 <input type="checkbox" className="form-check-input"
                                                                         id="delete_products" name="permissions[]"
                                                                         value="delete_products" onChange={onCheck}/>
@@ -181,7 +181,8 @@ export default function Create() {
                                                 </div>
                                             </div>
                                         </div>
-
+                                        </div>
+                                        <div className="row mb-5">
                                         {/* Product Categories Permission */}
                                         <div className="col-lg-4 col-md-6 mb-3">
                                             <div className="card h-100 border-0 shadow">
@@ -191,7 +192,7 @@ export default function Create() {
                                                 <div className="card-body">
                                                     <div className="row">
                                                         <div className="col-6">
-                                                            <div className="form-check form-switch">
+                                                            <div className="form-check form-switch form-switch-role">
                                                                 <input type="checkbox" className="form-check-input"
                                                                         id="access_product_categories" name="permissions[]"
                                                                         value="access_product_categories" onChange={onCheck} />
@@ -199,7 +200,7 @@ export default function Create() {
                                                             </div>
                                                         </div>
                                                         <div className="col-6">
-                                                            <div className="form-check form-switch">
+                                                            <div className="form-check form-switch form-switch-role">
                                                                 <input type="checkbox" className="form-check-input"
                                                                         id="create_product_categories" name="permissions[]"
                                                                         value="create_product_categories" onChange={onCheck}/>
@@ -207,7 +208,7 @@ export default function Create() {
                                                             </div>
                                                         </div>
                                                         <div className="col-6">
-                                                            <div className="form-check form-switch">
+                                                            <div className="form-check form-switch form-switch-role">
                                                                 <input type="checkbox" className="form-check-input"
                                                                         id="show_product_categories" name="permissions[]"
                                                                         value="show_product_categories" onChange={onCheck}/>
@@ -215,7 +216,7 @@ export default function Create() {
                                                             </div>
                                                         </div>
                                                         <div className="col-6">
-                                                            <div className="form-check form-switch">
+                                                            <div className="form-check form-switch form-switch-role">
                                                                 <input type="checkbox" className="form-check-input"
                                                                         id="edit_product_categories" name="permissions[]"
                                                                         value="edit_product_categories" onChange={onCheck}/>
@@ -223,7 +224,7 @@ export default function Create() {
                                                             </div>
                                                         </div>
                                                         <div className="col-12">
-                                                            <div className="form-check form-switch">
+                                                            <div className="form-check form-switch form-switch-role">
                                                                 <input type="checkbox" className="form-check-input"
                                                                         id="delete_product_categories" name="permissions[]"
                                                                         value="delete_product_categories" onChange={onCheck}/>
@@ -244,7 +245,7 @@ export default function Create() {
                                                 <div className="card-body">
                                                     <div className="row">
                                                         <div className="col-6">
-                                                            <div className="form-check form-switch">
+                                                            <div className="form-check form-switch form-switch-role">
                                                                 <input type="checkbox" className="form-check-input"
                                                                         id="access_pos_cashier" name="permissions[]"
                                                                         value="access_pos_cashier" onChange={onCheck} />
@@ -252,7 +253,7 @@ export default function Create() {
                                                             </div>
                                                         </div>
                                                         <div className="col-6">
-                                                            <div className="form-check form-switch">
+                                                            <div className="form-check form-switch form-switch-role">
                                                                 <input type="checkbox" className="form-check-input"
                                                                         id="create_pos_cashier" name="permissions[]"
                                                                         value="create_pos_cashier" onChange={onCheck}/>
@@ -274,7 +275,7 @@ export default function Create() {
                                                 <div className="card-body">
                                                     <div className="row">
                                                         <div className="col-6">
-                                                            <div className="form-check form-switch">
+                                                            <div className="form-check form-switch form-switch-role">
                                                                 <input type="checkbox" className="form-check-input"
                                                                         id="access_purchases" name="permissions[]"
                                                                         value="access_purchases" onChange={onCheck} />
@@ -282,7 +283,7 @@ export default function Create() {
                                                             </div>
                                                         </div>
                                                         <div className="col-6">
-                                                            <div className="form-check form-switch">
+                                                            <div className="form-check form-switch form-switch-role">
                                                                 <input type="checkbox" className="form-check-input"
                                                                         id="create_purchases" name="permissions[]"
                                                                         value="create_purchases" onChange={onCheck}/>
@@ -290,7 +291,7 @@ export default function Create() {
                                                             </div>
                                                         </div>
                                                         <div className="col-6">
-                                                            <div className="form-check form-switch">
+                                                            <div className="form-check form-switch form-switch-role">
                                                                 <input type="checkbox" className="form-check-input"
                                                                         id="show_purchases" name="permissions[]"
                                                                         value="show_purchases" onChange={onCheck}/>
@@ -298,7 +299,7 @@ export default function Create() {
                                                             </div>
                                                         </div>
                                                         <div className="col-6">
-                                                            <div className="form-check form-switch">
+                                                            <div className="form-check form-switch form-switch-role">
                                                                 <input type="checkbox" className="form-check-input"
                                                                         id="edit_purchases" name="permissions[]"
                                                                         value="edit_purchases" onChange={onCheck}/>
@@ -306,7 +307,7 @@ export default function Create() {
                                                             </div>
                                                         </div>
                                                         <div className="col-12">
-                                                            <div className="form-check form-switch">
+                                                            <div className="form-check form-switch form-switch-role">
                                                                 <input type="checkbox" className="form-check-input"
                                                                         id="delete_purchases" name="permissions[]"
                                                                         value="delete_purchases" onChange={onCheck}/>
@@ -317,7 +318,61 @@ export default function Create() {
                                                 </div>
                                             </div>
                                         </div>
+                                        </div>
+                                        <div className="row mb-5">
 
+                                             {/* Sales Permission */}
+                                        <div className="col-lg-4 col-md-6 mb-3">
+                                            <div className="card h-100 border-0 shadow">
+                                                <div className="card-header">
+                                                    Sales Module
+                                                </div>
+                                                <div className="card-body">
+                                                    <div className="row">
+                                                        <div className="col-6">
+                                                            <div className="form-check form-switch form-switch-role">
+                                                                <input type="checkbox" className="form-check-input"
+                                                                        id="access_sales" name="permissions[]"
+                                                                        value="access_sales" onChange={onCheck} />
+                                                                <label className="form-check-label" for="access_sales">Access Sales</label>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-6">
+                                                            <div className="form-check form-switch form-switch-role">
+                                                                <input type="checkbox" className="form-check-input"
+                                                                        id="create_sales" name="permissions[]"
+                                                                        value="create_sales" onChange={onCheck}/>
+                                                                <label className="form-check-label" for="create_sales">Create Sales</label>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-6">
+                                                            <div className="form-check form-switch form-switch-role">
+                                                                <input type="checkbox" className="form-check-input"
+                                                                        id="show_sales" name="permissions[]"
+                                                                        value="show_sales" onChange={onCheck}/>
+                                                                <label className="form-check-label" for="show_sales">Show Sales</label>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-6">
+                                                            <div className="form-check form-switch form-switch-role">
+                                                                <input type="checkbox" className="form-check-input"
+                                                                        id="edit_sales" name="permissions[]"
+                                                                        value="edit_sales" onChange={onCheck}/>
+                                                                <label className="form-check-label" for="edit_sales">Edit Sales</label>
+                                                            </div>
+                                                        </div>
+                                                        <div className="col-12">
+                                                            <div className="form-check form-switch form-switch-role">
+                                                                <input type="checkbox" className="form-check-input"
+                                                                        id="delete_sales" name="permissions[]"
+                                                                        value="delete_sales" onChange={onCheck}/>
+                                                                <label className="form-check-label" for="delete_sales">Delete Sales</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         {/* Reports Permission */}
                                         <div className="col-lg-4 col-md-6 mb-3">
                                             <div className="card h-100 border-0 shadow">
@@ -327,7 +382,7 @@ export default function Create() {
                                                 <div className="card-body">
                                                     <div className="row">
                                                         <div className="col-12">
-                                                            <div className="form-check form-switch">
+                                                            <div className="form-check form-switch form-switch-role">
                                                                 <input type="checkbox" className="form-check-input"
                                                                         id="access_reports" name="permissions[]"
                                                                         value="access_reports" onChange={onCheck} />
@@ -348,7 +403,7 @@ export default function Create() {
                                                 <div className="card-body">
                                                     <div className="row">
                                                         <div className="col-12">
-                                                            <div className="form-check form-switch">
+                                                            <div className="form-check form-switch form-switch-role">
                                                                 <input type="checkbox" className="form-check-input"
                                                                         id="access_settings" name="permissions[]"
                                                                         value="access_settings" onChange={onCheck} />
@@ -359,8 +414,6 @@ export default function Create() {
                                                 </div>
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
                             </form>

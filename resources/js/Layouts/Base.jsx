@@ -12,7 +12,7 @@ export default function Base({children, title}) {
 
     return (
         <div className="g-sidenav-show bg-gray-100">
-            <div className="min-height-1000 bg-gray-400 position-absolute w-100"></div>
+            <div className="min-height-2000 bg-gray-400 position-absolute w-100"></div>
                 <Head title={ title } />
                 <Sidebar />
                 <main className="main-content position-relative border-radius-lg d-flex flex-column min-vh-100 ">
