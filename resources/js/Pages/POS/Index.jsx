@@ -10,7 +10,7 @@ export default function POS() {
     return (
         <>
             <div className="container p-5">
-                <div className="btn w-100 mb-4 bg-card" onClick={() => showMenu(z)}>
+                <div className="btn w-100 mb-4 bg-card" onClick={() => showMenu()}>
                     <div className="text-center">
                         <h1 className="p-4 text-white">Merhcant A</h1>
                     </div>
