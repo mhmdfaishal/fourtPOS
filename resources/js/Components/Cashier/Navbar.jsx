@@ -1,9 +1,13 @@
 import { Link, usePage } from '@inertiajs/inertia-react'
 import React from 'react'
+import { Inertia } from '@inertiajs/inertia';
 
 export default function Navbar({props, pageName}) {
     const { auth } = usePage().props;
     const [isShown, setIsShown] = React.useState(false);
+    const showProfile = () => {
+        Inertia.get(route('profile'))
+    }
 
     return (
         <nav className="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
@@ -24,7 +28,7 @@ export default function Navbar({props, pageName}) {
                         { auth.user != null 
                             ?
                             <li className="nav-item pe-3 d-flex align-items-center">
-                                <ul className="nav-link text-dark profile-account" href="#" role="button" aria-expanded="false" onMouseEnter={() => setIsShown(true)} onMouseLeave={() => setIsShown(false)}>
+                                <ul className="nav-link text-dark profile-account" role="button" onClick={() => showProfile()} aria-expanded="false" onMouseEnter={() => setIsShown(true)} onMouseLeave={() => setIsShown(false)}>
                                     <img src="/img/team-2.jpg" className="avatar avatar-sm  me-3 " />
                                     {auth.user.name}
                                 </ul>

@@ -3553,7 +3553,6 @@ textarea.form-control.is-invalid {
   vertical-align: middle;
   cursor: pointer;
   user-select: none;
-  background-color: transparent;
   border: 1px solid transparent;
   padding: 0.625rem 1.25rem;
   font-size: 0.875rem;
@@ -26729,8 +26728,8 @@ input[type="search"] {
   margin-top: 1rem;
 }
 .img-item-cart {
-  width: 12rem;
-  height: 8rem;
+  width: auto;
+  max-height: 6rem;
   border-radius: 0.5rem;
 }
 .list-item-cart .item-name, .list-item-cart .item-price{
@@ -26804,4 +26803,9 @@ input[type="search"] {
   user-select: none;
   opacity: 0.9;
   transition: all 0.2s ease-in-out;
+}
+
+.bg-card{
+  background-image: url(/public/img/card-merchant.png) !important;
+  background-size: cover !important;
 }

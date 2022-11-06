@@ -2,15 +2,11 @@ import React from 'react'
 import BasePOS from '../../Layouts/BasePOS'
 import { Inertia } from '@inertiajs/inertia'
 
-export default function POS() {
-    const showMenu = () => {
-        Inertia.get(route('show.merchant'))
-    }
-
+export default function ShowMerchant() {
     return (
         <>
             <div className="container p-5">
-                <div className="btn w-100 mb-4 bg-card" onClick={() => showMenu(z)}>
+                <div className="btn w-100 mb-4 bg-card" onClick={() => showMenu()}>
                     <div className="text-center">
                         <h1 className="p-4 text-white">Merhcant A</h1>
                     </div>
