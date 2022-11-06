@@ -10793,6 +10793,9 @@ fieldset:disabled .btn {
 .min-height-1000 {
   min-height: 1000px !important;
 }
+.min-height-2000 {
+  min-height: 2000px !important;
+}
 
 .height-100 {
   height: 100px !important;
@@ -21338,6 +21341,11 @@ fieldset:disabled .btn {
   background-color: #d7ae8e;
 }
 
+.form-switch-role .form-check-input:checked {
+  border-color: #f57328 !important;
+  background-color: #f57328 !important;
+}
+
 .form-switch .form-check-label {
   margin-bottom: 0;
   margin-left: .5rem;
@@ -24649,7 +24657,9 @@ p,
 .text-lg {
   font-size: 1.125rem !important;
 }
-
+.text-sm-sm {
+  font-size: 0.735rem !important;
+}
 .text-sm {
   font-size: 0.875rem !important;
 }

@@ -31,6 +31,7 @@ class POSController extends Controller
     public function showMerchant($id) {
         $getMerchant = User::where('id', $id)->first();
         $products = Product::where('user_id', $id)->get();
+        
         return inertia('POS/ShowMerchant',[
             'merchant' => $getMerchant,
             'products' => $products,
