@@ -1,5 +1,5 @@
 import { useForm } from '@inertiajs/inertia-react'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function EditProduct({close, model, categories}) {
 
@@ -15,10 +15,15 @@ export default function EditProduct({close, model, categories}) {
             product_stock_alert: model.product_stock_alert, 
             category_id: model.category?.id,
             thumb: model.image,
-            image : model.image, 
+            // image : model.image, 
         });
 
     const onChange = (e) => setData({ ...data, [e.target.id]: e.target.value });
+    const onChangeFile = (e) => {
+        console.log(e.target.files[0]);
+        setData({ ...data, [e.target.id]: e.target.files[0] });
+    }
+
    
     const onSubmit = (e) => {
         e.preventDefault();
@@ -42,7 +47,7 @@ export default function EditProduct({close, model, categories}) {
             product_note: model.product_note, 
             product_stock_alert: model.product_stock_alert, 
             category_id: model.category?.id, 
-            image : model.image, 
+            // image : model.image,
             thumb: model.image, 
         });
     }, [model]);
@@ -69,12 +74,7 @@ export default function EditProduct({close, model, categories}) {
                         </div>
                         <div className="form-group">
                             <label htmlFor="product_price" className="col-form-label">Category:</label>
-<<<<<<< HEAD
                             <select className="form-control" name="category_id" id="category_id" onChange={onChange} required>
-=======
-                            <select className="form-control" name="category_id" id="category_id" onChange={onChange}>
-                            <option value="" disabled>Select Category</option>
->>>>>>> origin
                                 {categories.map((category) => (
                                     category.id === data.category_id ? 
                                         <option value={category.id} selected>{category.category_name}</option> 
