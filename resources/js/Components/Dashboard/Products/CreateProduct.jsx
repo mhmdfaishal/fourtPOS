@@ -12,7 +12,7 @@ export default function CreateProduct({close, categories}) {
         product_cost: '', 
         product_note: '',
         product_stock_alert: '',
-        image : null,
+        // image : null,
     });
 
     const onChange = (e) => setData({ ...data, [e.target.id]: e.target.value });
@@ -50,7 +50,12 @@ export default function CreateProduct({close, categories}) {
                         </div>
                         <div className="form-group">
                             <label htmlFor="product_price" className="col-form-label">Category:</label>
+<<<<<<< HEAD
                             <select className="form-control" name="category_id" id="category_id" onChange={onChange} required>
+=======
+                            <select className="form-control" name="category_id" id="category_id" onChange={onChange}>
+                                <option value="" disabled selected>Select Category</option>
+>>>>>>> origin
                                 {categories.map((category) => (
                                     <option value={category.id}>{category.category_name}</option>
                                 ))}
@@ -79,7 +84,7 @@ export default function CreateProduct({close, categories}) {
                             <input type="number" className="form-control" name='product_stock_alert' value={data.product_stock_alert} onChange={onChange} id="product_stock_alert" required/>
                             {errors && <div className='text-danger mt-1'>{errors.product_stock_alert}</div>}
                         </div>
-                        <div className="form-group">
+                        {/* <div className="form-group">
                             <label htmlFor="image" className="col-form-label">Product Image:</label>
                             <input type="file" className="form-control" name='image' onChange={e => setData('image', e.target.files[0])} id="image" accept='image/*'required/>
                             {errors && <div className='text-danger mt-1'>{errors.image}</div>}
@@ -88,7 +93,7 @@ export default function CreateProduct({close, categories}) {
                                     {progress.percentage}%
                                 </progress>
                             )}
-                        </div>
+                        </div> */}
                 </div>
                 <div className="modal-footer">
                     <button type="button" className="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>

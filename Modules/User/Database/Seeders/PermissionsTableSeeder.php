@@ -21,11 +21,7 @@ class PermissionsTableSeeder extends Seeder
             'edit_own_profile',
             'access_user_management',
             //Dashboard
-            'show_total_stats',
-            'show_month_overview',
-            'show_weekly_sales_purchases',
-            'show_monthly_cashflow',
-            'show_notifications',
+            'show_dashboard',
             //Products
             'access_products',
             'create_products',
@@ -34,7 +30,10 @@ class PermissionsTableSeeder extends Seeder
             'delete_products',
             //Product Categories
             'access_product_categories',
-
+            'create_product_categories',
+            'show_product_categories',
+            'edit_product_categories',
+            'delete_product_categories',
             //Sales
             'access_sales',
             'create_sales',
@@ -42,10 +41,11 @@ class PermissionsTableSeeder extends Seeder
             'edit_sales',
             'delete_sales',
             
-            //POS Sale
-            'create_pos_sales',
+            //POS Cashier
+            'create_pos_cashier',
+            'access_pos_cashier',
             //Sale Payments
-            'access_sale_payments',
+            // 'access_sale_payments',
 
             //Purchases
             'access_purchases',
@@ -54,7 +54,7 @@ class PermissionsTableSeeder extends Seeder
             'edit_purchases',
             'delete_purchases',
             //Purchase Payments
-            'access_purchase_payments',
+            // 'access_purchase_payments',
 
             //Reports
             'access_reports',

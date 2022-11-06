@@ -12,7 +12,7 @@ export default function Navbar({props, pageName}) {
 
                     <form onSubmit="event.preventDefault();" role="search" className='search-form'>
                         <label for="search" className='search-label'>Search for stuff</label>
-                        <input id="search" type="search" className='search-input' placeholder="Search..." autoFocus required />
+                        <input id="search" type="search" className='search-input' placeholder="Search Merchant" autoFocus required />
                         <button type="submit" className='btn-search'>Search</button>    
                     </form>
                 </nav>

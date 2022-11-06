@@ -3596,6 +3596,19 @@ fieldset:disabled .btn {
   border-color: #5e72e4;
 }
 
+.btn-teal-orange {
+  color: #fff;
+  background-color: #f57328;
+  border-color: #f57328;
+}
+
+.btn-teal-orange:hover {
+  color: #fff;
+  background-color: #f57328;
+  border-color: #f57328;
+  box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+}
+
 .btn-primary:hover {
   color: #000;
   background-color: #7687e8;
@@ -10383,7 +10396,9 @@ fieldset:disabled .btn {
 .bg-gradient {
   background-image: var(--bs-gradient) !important;
 }
-
+.bg-gradient-orange {
+  background-image: linear-gradient(87deg, #fbb140 0, #f7892b 100%) !important;
+}
 .user-select-all {
   user-select: all !important;
 }

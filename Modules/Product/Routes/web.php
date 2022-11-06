@@ -29,7 +29,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/create', [CategoryController::class, 'create'])->name('category.create.form');
         Route::post('/create', [CategoryController::class, 'store'])->name('category.create.store');
         Route::get('/{category}/update', [CategoryController::class, 'edit'])->name('category.edit.form');
-        Route::patch('/{category}/patch', [CategoryController::class, 'update'])->name('category.edit.post');
+        Route::put('/{category}', [CategoryController::class, 'update'])->name('category.edit.post');
         Route::delete('/{category}/delete', [CategoryController::class, 'destroy'])->name('category.delete');
     });
 });

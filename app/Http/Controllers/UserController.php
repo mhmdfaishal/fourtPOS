@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\UserUpdateRequest;
+use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\RolesResource;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -13,17 +18,31 @@ class UserController extends Controller
     public function index()
     {
         $users = UserResource::collection(User::with('roles')->latest()->paginate(10));
-        // dd($users[0]->roles[0]->name);
+
+        $roles = RolesResource::collection(Role::where('name', '!=', 'Super Admin')->orderBy('created_at', 'asc')->get());
+
         return inertia('Users/Index', [
             'users' => $users,
+            'roles' => $roles,
         ]);
     }
 
     public function store(UserRequest $request)
     {
-        $attr = $request->toArray();
+        $form_data = array(
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'password' => Hash::make($request->password),
+            'is_active' => $request->is_active,
+            'merchant_name' => $request->merchant_name,
+        );
 
-        User::create($attr);
+        if ($request->role == "Merchant" && $request->merchant_name == null) {
+            return redirect()->back()->with('error', 'Merchant name is required');
+        }
+
+        $create_user = User::create($form_data);
+        $create_user->assignRole($request->role);
 
         return back()->with([
             'type' => 'success',
@@ -31,11 +50,45 @@ class UserController extends Controller
         ]);
     }
 
-    public function update(UserRequest $request, User $user)
+    public function updateProfile(ProfileUpdateRequest $request, User $user)
     {
-        $attr = $request->toArray();
+        $form_data = array(
+            'name'     => $request->name,
+            'email'    => $request->email,
+        );
+        
+        if($request->password != null && $request->password == $request->password_confirmation) {
+            // add password to form data
+            $form_data['password'] = Hash::make($request->password);
+        } else if($request->password != null && $request->password_confirmation == null) {
+            return redirect()->back()->with('error', 'Password confirmation is required');
+        }
 
-        $user->update($attr);
+        if($user->getRoleNames()->first() == 'Merchant' && $request->merchant_name == null) {
+            return redirect()->back()->with('error', 'Merchant name is required');
+        } else if ($user->getRoleNames()->first() == 'Merchant' && $request->merchant_name != null) {
+            $form_data['merchant_name'] = $request->merchant_name;
+        }
+
+        $user->update($form_data);
+
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Profile has been updated',
+        ]);
+    }
+
+    public function update(UserUpdateRequest $request, User $user)
+    {
+        $form_data = array(
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'is_active' => $request->is_active,
+            'merchant_name' => $request->merchant_name,
+        );
+        
+        $user->update($form_data);
+        $user->syncRoles($request->user_role);
 
         return back()->with([
             'type' => 'success',

@@ -5,6 +5,7 @@ export default function EditProduct({close, model, categories}) {
 
     const {data, setData, put, reset, errors, progress} = useForm(
         { 
+            id : model.id,
             product_name: model.product_name, 
             product_code: model.product_code, 
             product_quantity: model.product_quantity, 
@@ -32,6 +33,7 @@ export default function EditProduct({close, model, categories}) {
 
     useEffect(() => {
         setData({...data,
+            id : model.id,
             product_name: model.product_name, 
             product_code: model.product_code, 
             product_quantity: model.product_quantity, 
@@ -67,7 +69,12 @@ export default function EditProduct({close, model, categories}) {
                         </div>
                         <div className="form-group">
                             <label htmlFor="product_price" className="col-form-label">Category:</label>
+<<<<<<< HEAD
                             <select className="form-control" name="category_id" id="category_id" onChange={onChange} required>
+=======
+                            <select className="form-control" name="category_id" id="category_id" onChange={onChange}>
+                            <option value="" disabled>Select Category</option>
+>>>>>>> origin
                                 {categories.map((category) => (
                                     category.id === data.category_id ? 
                                         <option value={category.id} selected>{category.category_name}</option> 
