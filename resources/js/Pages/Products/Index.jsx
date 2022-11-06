@@ -6,6 +6,7 @@ import useDialog from '../../Hooks/useDialog';
 import CreateProduct from '../../Components/Dashboard/Products/CreateProduct';
 import EditProduct from '../../Components/Dashboard/Products/EditProduct';
 import { Inertia } from '@inertiajs/inertia';
+import { convertToIDR } from "../../Utils/helper";
 
 export default function Index(props) {
 
@@ -104,7 +105,7 @@ export default function Index(props) {
                                                     <span className="text-xs font-weight-bold">{product.category.category_name}</span>
                                                 </td>
                                                 <td className='text-left'>
-                                                    <span className="text-xs font-weight-bold">{product.product_price}</span>
+                                                    <span className="text-xs font-weight-bold">{convertToIDR(product.product_price)}</span>
                                                 </td>
                                                 <td className='text-left'>
                                                     <span className="text-xs font-weight-bold">{product.product_quantity}</span>

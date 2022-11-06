@@ -25,13 +25,13 @@ class ProductRequest extends FormRequest
     {
         return [
             'product_name' => 'required|string|min:3|max:255',
-            'product_code' => 'required|string|min:3|max:255|unique:products,product_code',
+            'product_code' => 'required|string|min:3|max:255|unique:products,product_code,' . $this->id .',id',
             'product_quantity' => 'required|numeric',
             'product_price' => 'required|numeric',
             'product_cost' => 'required|numeric',
             'product_note' => 'required|string|min:3|max:255',
             'category_id' => 'required|numeric|exists:categories,id',
-            
+            'product_stock_alert' => 'required|numeric',
         ];
     }
 }

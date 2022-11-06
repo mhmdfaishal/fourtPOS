@@ -26,7 +26,7 @@ class SuperUserSeeder extends Seeder
         $superAdmin = Role::create([
             'name' => 'Super Admin'
         ]);
-        $superAdmin->givePermissionTo(['access_user_management','edit_own_profile','access_settings','create_pos_sales']);
+        $superAdmin->givePermissionTo(['access_user_management','edit_own_profile','access_settings']);
         $user->assignRole($superAdmin);
     }
 }
