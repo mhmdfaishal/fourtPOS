@@ -17,6 +17,8 @@ class HomeController extends Controller
         $user = auth()->user();
         if ($user->getRoleNames()->first() == 'Super Admin' || $user->getRoleNames()->first() == 'Merchant') {
             return redirect()->route('dashboard');
+        } else if ($user->getRoleNames()->first() == 'Cashier' ) {
+            return redirect()->route('list.merchant');
         }
     }
 }

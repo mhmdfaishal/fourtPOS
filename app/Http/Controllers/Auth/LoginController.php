@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use App\Models\User;
 
 class LoginController extends Controller
 {
@@ -21,6 +22,13 @@ class LoginController extends Controller
 
         if(Auth::attempt($request->only('email', 'password'), $request->remember)) {
             session()->regenerate();
+            $cashier = User::where('email' , $request->email)->first();
+            if ($cashier->hasRole('Cashier')) {
+                return redirect()->route('list.merchant')->with([
+                    'type' => 'success',
+                    'message' => 'You are logged in.'
+                ]);
+            } 
             return redirect('/dashboard')->with([
                 'type' => 'success',
                 'message' => 'You are logged in.'

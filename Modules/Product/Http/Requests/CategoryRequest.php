@@ -24,7 +24,7 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'category_code' => 'required|string|max:255|min:3|unique:categories,category_code,' . $this->id .',id',
+            'category_code' => 'required|string|max:255|min:3|unique:categories,category_code,' . $this->id .',id,user_id,' . auth()->user()->id,
             'category_name' => 'required|string|max:255|min:3',
         ];
     }
