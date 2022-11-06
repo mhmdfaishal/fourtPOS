@@ -26,10 +26,8 @@ class ProductController extends Controller
     public function index()
     {
         // abort_if(Gate::denies('access_products'), 403);
-
         $products = ProductResource::collection(Product::with('category')->where('user_id', auth()->user()->id)->paginate(10));
-        $categories = CategoryResource::collection(Category::all());
-        // dd($products);
+        $categories = CategoryResource::collection(Category::where('user_id', auth()->user()->id)->get());
         return Inertia::render('Products/Index', ['products' => $products,'categories' => $categories]);
     }
 
@@ -41,7 +39,7 @@ class ProductController extends Controller
     public function create()
     {
         // abort_if(Gate::denies('create_products'), 403);
-
+        
         return Inertia::render('Product/AddForm', [
             'urlPost' => route('product.create.store'),
             'categories' => Category::where('user_id', auth()->user()->id)->get()
@@ -57,15 +55,14 @@ class ProductController extends Controller
     public function store(ProductRequest $request, Product $product)
     {
         // abort_if(Gate::denies('show_products'), 403);
-
+        // dd($request->all());
         $product->fill($request->only($product->getFillable()));
         $product->user_id = auth()->user()->id;
         $product->save();
 
-        // if ($request->hasFile('image')) {
-        //     $filename = now()->timestamp . '.' . trim($request->file('image')->getClientOriginalExtension());
-        //     $product->addMedia(Storage::path('temp/dropzone/' . $request->file('image')->getClientOriginalName()))->toMediaCollection('images');
-        // }
+        if ($request->hasFile('image')) {
+            $product->addMedia($request->file('image'))->toMediaCollection(Product::IMAGE_COLLECTION);
+        }
         return redirect()->route('product.index');
     }
 
@@ -108,6 +105,10 @@ class ProductController extends Controller
     {
         $product->fill($request->only($product->getFillable()));
         if($product->isDirty()) $product->save();
+
+        if ($request->hasFile('image')) {
+            $product->addMedia($request->file('image'))->toMediaCollection(Product::IMAGE_COLLECTION);
+        }
 
         return redirect()->route('product.index');
     }   

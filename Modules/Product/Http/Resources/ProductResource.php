@@ -24,6 +24,7 @@ class ProductResource extends JsonResource
             'product_note' => $this->product_note,
             'product_stock_alert' => $this->product_stock_alert,
             'category' => $this->category,
+            'image' => $this->image,
         ];
     }
 }

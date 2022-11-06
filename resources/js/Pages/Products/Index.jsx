@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/inertia-react';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Dialog from '../../Components/Dashboard/Dialog';
 import Base from '../../Layouts/Base'
 import useDialog from '../../Hooks/useDialog';
@@ -22,6 +22,7 @@ export default function Index(props) {
         UpdateDialogHandler()
     }
 
+    useEffect(() => {console.log(products)}, []);
     const openDestroyDialog = (product) => {
         setState(product);
         destroyDialogHandler()        
@@ -58,7 +59,7 @@ export default function Index(props) {
                             <div className="card-header pb-0">
                             <div className="row">
                                 <div className="col-md-6">
-                                    <h6>Products table</h6>
+                                    <h6>Products</h6>
                                 </div>
                                 <div className="col-md-6 d-flex justify-content-end">
                                     <button onClick={addDialogHandler} type="button" className="btn bg-gradient-success btn-block mb-3" data-bs-toggle="modal" data-bs-target="#exampleModalMessage">
@@ -85,7 +86,8 @@ export default function Index(props) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {products.map((product, index) => (
+                                        
+                                        {products.length > 0 ? products.map((product, index) => (
                                             <tr key={product.id}>
                                                 <td className='text-center'>{meta.from + index}</td>
                                                 <td className='text-left'>
@@ -94,7 +96,11 @@ export default function Index(props) {
                                                 <td className='text-left'>
                                                     <div className="d-flex px-2">
                                                         <div>
-                                                            <img src="/img/team-2.jpg" className="avatar avatar-sm  me-3 " />
+                                                            {product.image ? (
+                                                                <img src={product.image} className="avatar avatar-sm  me-3 " />
+                                                            ) : (
+                                                                <img src="/img/team-2.jpg" className="avatar avatar-sm  me-3 " />
+                                                            )}
                                                         </div>
                                                         <div className="my-auto">
                                                             <h6 className="mb-0 text-sm">{product.product_name}</h6>
@@ -130,7 +136,11 @@ export default function Index(props) {
                                                 </div>
                                                 </td>
                                             </tr>
-                                        ))}
+                                        )) : (
+                                            <tr>
+                                                <td colSpan="10" className="text-center">No Data</td>
+                                            </tr>
+                                        )}
                                     </tbody>
                                 </table>
                             </div>
