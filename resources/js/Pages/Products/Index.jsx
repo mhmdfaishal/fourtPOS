@@ -86,7 +86,8 @@ export default function Index(props) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {products.map((product, index) => (
+                                        
+                                        {products.length > 0 ? products.map((product, index) => (
                                             <tr key={product.id}>
                                                 <td className='text-center'>{meta.from + index}</td>
                                                 <td className='text-left'>
@@ -135,7 +136,11 @@ export default function Index(props) {
                                                 </div>
                                                 </td>
                                             </tr>
-                                        ))}
+                                        )) : (
+                                            <tr>
+                                                <td colSpan="10" className="text-center">No Data</td>
+                                            </tr>
+                                        )}
                                     </tbody>
                                 </table>
                             </div>

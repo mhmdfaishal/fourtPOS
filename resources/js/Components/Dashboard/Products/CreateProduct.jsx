@@ -45,17 +45,13 @@ export default function CreateProduct({close, categories}) {
                         </div>
                         <div className="form-group">
                             <label htmlFor="product_price" className="col-form-label">Product Price:</label>
-                            <input type="number" className="form-control" name='product_price' value={data.product_price} onChange={onChange} id="product_price" required/>
+                            <input type="number" className="form-control" name='product_price' value={data.product_price} onChange={onChange} id="product_price" min='0' required/>
                             {errors && <div className='text-danger mt-1'>{errors.product_price}</div>}
                         </div>
                         <div className="form-group">
                             <label htmlFor="product_price" className="col-form-label">Category:</label>
-<<<<<<< HEAD
                             <select className="form-control" name="category_id" id="category_id" onChange={onChange} required>
-=======
-                            <select className="form-control" name="category_id" id="category_id" onChange={onChange}>
-                                <option value="" disabled selected>Select Category</option>
->>>>>>> origin
+                                <option value="" selected disabled>Select Category</option>
                                 {categories.map((category) => (
                                     <option value={category.id}>{category.category_name}</option>
                                 ))}
@@ -64,12 +60,12 @@ export default function CreateProduct({close, categories}) {
                         </div>
                         <div className="form-group">
                             <label htmlFor="product_quantity" className="col-form-label">Product Quantity:</label>
-                            <input type="number" className="form-control" name='product_quantity' value={data.product_quantity} onChange={onChange} id="product_quantity" required/>
+                            <input type="number" className="form-control" name='product_quantity' value={data.product_quantity} onChange={onChange} id="product_quantity" min='0' required/>
                             {errors && <div className='text-danger mt-1'>{errors.product_quantity}</div>}
                         </div>
                         <div className="form-group">
                             <label htmlFor="product_cost" className="col-form-label">Product Cost:</label>
-                            <input type="number" className="form-control" name='product_cost' value={data.product_cost} onChange={onChange} id="product_cost" required/>
+                            <input type="number" className="form-control" name='product_cost' value={data.product_cost} onChange={onChange} id="product_cost" min='0' required/>
                             {errors && <div className='text-danger mt-1'>{errors.product_cost}</div>}
                         </div>
                         <div className="form-group">
@@ -84,7 +80,7 @@ export default function CreateProduct({close, categories}) {
                             <input type="number" className="form-control" name='product_stock_alert' value={data.product_stock_alert} onChange={onChange} id="product_stock_alert" required/>
                             {errors && <div className='text-danger mt-1'>{errors.product_stock_alert}</div>}
                         </div>
-                        {/* <div className="form-group">
+                        <div className="form-group">
                             <label htmlFor="image" className="col-form-label">Product Image:</label>
                             <input type="file" className="form-control" name='image' onChange={e => setData('image', e.target.files[0])} id="image" accept='image/*'required/>
                             {errors && <div className='text-danger mt-1'>{errors.image}</div>}
@@ -93,7 +89,7 @@ export default function CreateProduct({close, categories}) {
                                     {progress.percentage}%
                                 </progress>
                             )}
-                        </div> */}
+                        </div>
                 </div>
                 <div className="modal-footer">
                     <button type="button" className="btn bg-gradient-secondary" data-bs-dismiss="modal">Close</button>

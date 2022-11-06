@@ -26,10 +26,8 @@ class ProductController extends Controller
     public function index()
     {
         // abort_if(Gate::denies('access_products'), 403);
-        // dd(Product::with('category')->where('user_id', auth()->user()->id)->get()->toArray());
         $products = ProductResource::collection(Product::with('category')->where('user_id', auth()->user()->id)->paginate(10));
-        $categories = CategoryResource::collection(Category::all());
-        // dd($products);
+        $categories = CategoryResource::collection(Category::where('user_id', auth()->user()->id)->get());
         return Inertia::render('Products/Index', ['products' => $products,'categories' => $categories]);
     }
 
