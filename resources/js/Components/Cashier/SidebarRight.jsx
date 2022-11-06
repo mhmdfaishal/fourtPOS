@@ -18,6 +18,8 @@ export default function SidebarRight() {
         document.querySelector('.sidenav-pos').style.transform = "translateX(85%)";
         document.querySelector('.sidenav-pos').style.transition = 'transform 0.3s ease-in-out';
         document.querySelector('.main-content').style.marginRight = "5.900rem";
+        document.querySelector('#grid-system').classList.remove("row-cols-3");
+        document.querySelector('#grid-system').classList.add("row-cols-4");
         setIsOpen(false);
     }
 
@@ -25,6 +27,8 @@ export default function SidebarRight() {
         document.querySelector('.sidenav-pos').style.transform = "translateX(0)";
         document.querySelector('.sidenav-pos').style.transition = 'transform 0.3s ease-in-out';
         document.querySelector('.main-content').style.marginRight = "25.900rem";
+        document.querySelector('#grid-system').classList.remove("row-cols-4");
+        document.querySelector('#grid-system').classList.add("row-cols-3");
         setIsOpen(true);
     }
 
