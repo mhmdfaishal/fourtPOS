@@ -15,12 +15,11 @@ export default function EditProduct({close, model, categories}) {
             product_stock_alert: model.product_stock_alert, 
             category_id: model.category?.id,
             thumb: model.image,
-            // image : model.image, 
+            image : model.image, 
         });
 
     const onChange = (e) => setData({ ...data, [e.target.id]: e.target.value });
     const onChangeFile = (e) => {
-        console.log(e.target.files[0]);
         setData({ ...data, [e.target.id]: e.target.files[0] });
     }
 
@@ -34,6 +33,7 @@ export default function EditProduct({close, model, categories}) {
                 close()
             }, 
         });
+        console.log(data);
     }
 
     useEffect(() => {
@@ -47,7 +47,7 @@ export default function EditProduct({close, model, categories}) {
             product_note: model.product_note, 
             product_stock_alert: model.product_stock_alert, 
             category_id: model.category?.id, 
-            // image : model.image,
+            image : model.image,
             thumb: model.image, 
         });
     }, [model]);
@@ -111,7 +111,7 @@ export default function EditProduct({close, model, categories}) {
                             <img src={data.thumb} alt="productImage" className="img-thumbnail " />
                         </div>
                         <div className="form-group">
-                            <input type="file" className="form-control" name='image' onChange={e => setData('image', e.target.files[0])} id="image" accept='image/*'/>
+                            <input type="file" className="form-control" name='image' onChange={(e)=> setData('image',e.target.files[0] )} id="image" accept='image/*'/>
                             {errors && <div className='text-danger mt-1'>{errors.image}</div>}
                             {progress && (
                                 <progress value={progress.percentage} max="100">

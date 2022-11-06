@@ -103,7 +103,6 @@ class ProductController extends Controller
      */
     public function update(ProductRequest $request, Product $product)
     {
-        dd($request->all());
         $product->fill($request->only($product->getFillable()));
         if($product->isDirty()) $product->save();
 
