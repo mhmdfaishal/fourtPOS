@@ -23,7 +23,7 @@ class Purchase extends Model
         'status',
         'user_id'
     ];
-
+    protected $appends = ['user_name','purchase_details'];
     protected $with = ['purchaseDetails'];
 
     public function purchaseDetails() {
@@ -32,6 +32,12 @@ class Purchase extends Model
 
     public function user() {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+    public function getUserNameAttribute() {
+        return $this->user->name;
+    }
+    public function getPurchaseDetailsAttribute() {
+        return $this->purchaseDetails()->get();
     }
 
 }

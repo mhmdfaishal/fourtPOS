@@ -1,22 +1,20 @@
 import { useForm } from '@inertiajs/inertia-react'
 import React, { useEffect } from 'react'
 
-export default function DetailSales({close, model}) {
+export default function DetailPurchases({close, model}) {
 
     const {data, setData, put, reset, errors} = useForm(
         { 
             id : model.id,
             reference: model.reference, 
             date: model.date, 
-            user: model.user_name, 
-            tax_percentage: model.tax_percentage, 
-            tax_amount: model.tax_amount, 
+            user: model.user_name,  
             total_amount: model.total_amount, 
             paid_amount: model.paid_amount, 
             payment_method: model.payment_method, 
             payment_status: model.payment_status, 
             notes: model.notes,
-            sale_detail : model.sale_details 
+            purchase_detail : model.purchase_details 
         });
 
     useEffect(() => {
@@ -24,15 +22,13 @@ export default function DetailSales({close, model}) {
           id : model.id,
           reference: model.reference, 
           date: model.date,
-          user: model.user_name, 
-          tax_percentage: model.tax_percentage, 
-          tax_amount: model.tax_amount, 
+          user: model.user_name,  
           total_amount: model.total_amount, 
           paid_amount: model.paid_amount, 
           payment_method: model.payment_method, 
           payment_status: model.payment_status, 
           notes: model.notes, 
-          sale_detail : model.sale_details 
+          purchase_detail : model.purchase_details 
         });
     }, [model]);
     
@@ -52,14 +48,6 @@ export default function DetailSales({close, model}) {
                         <div className="form-group">
                             <label htmlFor="date" className="col-form-label">Date:</label>
                             <input type="date" className="form-control" name='date' value={data.date} id="date" disabled/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="tax_percentage" className="col-form-label">Tax Percentage:</label>
-                            <input type="number" className="form-control" name='tax_percentage' value={data.tax_percentage} id="tax_percentage" disabled/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="tax_amount" className="col-form-label">Tax Amount:</label>
-                            <input type="number" className="form-control" name='tax_amount' value={data.tax_amount} id="tax_amount" disabled/>
                         </div>
                         <div className="form-group">
                             <label htmlFor="total_amount" className="col-form-label">Total Amount:</label>
@@ -86,19 +74,15 @@ export default function DetailSales({close, model}) {
                                 <tr>
                                     <th>Product</th>
                                     <th>Quantity</th>
-                                    <th>Unit Price</th>
                                     <th>Price</th>
-                                    <th>Sub Total</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            {data.sale_detail?.map((item, index) => (
+                            {data.purchase_detail?.map((item, index) => (
                                 <tr key={index}>
                                     <td>{item.product_name}</td>
                                     <td>{item.quantity}</td>
-                                    <td>{item.unit_price}</td>
                                     <td>{item.price}</td>
-                                    <td>{item.sub_total}</td>
                                 </tr>
                             ))}
                             </tbody>

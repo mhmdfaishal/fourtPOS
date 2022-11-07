@@ -40,28 +40,4 @@ class Sale extends Model
     public function scopeCompleted($query) {
         return $query->where('status', 'Completed');
     }
-
-    public function getShippingAmountAttribute($value) {
-        return $value / 100;
-    }
-
-    public function getPaidAmountAttribute($value) {
-        return $value / 100;
-    }
-
-    public function getTotalAmountAttribute($value) {
-        return $value / 100;
-    }
-
-    public function getDueAmountAttribute($value) {
-        return $value / 100;
-    }
-
-    public function getTaxAmountAttribute($value) {
-        return $value / 100;
-    }
-
-    public function getDiscountAmountAttribute($value) {
-        return $value / 100;
-    }
 }
