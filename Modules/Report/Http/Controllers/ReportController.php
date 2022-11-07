@@ -9,6 +9,8 @@ use Illuminate\Routing\Controller;
 use Inertia\Inertia;
 use Modules\Report\Http\Requests\ReportFilterRequest;
 use Modules\Sale\Entities\Sale;
+use Modules\Sale\Http\Resources\SalesResource;
+use Modules\Report\Http\Resources\PurchaseResource;
 
 class ReportController extends Controller
 {
@@ -18,21 +20,23 @@ class ReportController extends Controller
      */
     public function index(Request $request)
     {
-        $purchase = Purchase::with('purchaseDetails')->with('user')->where('user_id', auth()->user()->id)->get();
-        $sale = Sale::with('saleDetails')->with('user')->where('user_id', auth()->user()->id)->get();
-        $data = $sale->merge($purchase);
-        $data->sortBy('date');
-        $urlPost = route('reports.show');
-        $income = $sale->sum('total_amount');
-        $outcome = $purchase->sum('total_amount');
-    
-        $profit = $income - $outcome;
+        $purchase = PurchaseResource::collection(Purchase::with('purchaseDetails')->with('user')->where('user_id', auth()->user()->id)->paginate(10));
+        $sales = SalesResource::collection(Sale::with('saleDetails')->with('user')->where('user_id', auth()->user()->id)->paginate(10));
+        $totalIncome = $sales->sum('total_amount');
+        $totalExpense = $purchase->sum('total_amount');
+        $totalBenefit = 0;
+        foreach($sales as $sale){
+            foreach($sale->saleDetails as $saleDetail){
+                $totalBenefit += $saleDetail->unit_price * $saleDetail->quantity;
+            }
+        }
+        $totalBenefit = $totalIncome - $totalBenefit;
         return Inertia::render('Reports/Index', [
-            'data' => $data, 
-            'urlPost' => $urlPost,
-            'income' => $income,
-            'outcome' => $outcome,
-            'profit' => $profit
+            'totalIncome' => $totalIncome, 
+            'totalExpense' => $totalExpense, 
+            'totalBenefit' => $totalBenefit, 
+            'sales' => $sales,
+            'purchases' => $purchase
             ]);
     }
 
@@ -64,21 +68,23 @@ class ReportController extends Controller
     {
         $from = $request->start_date;
         $to = $request->end_date;
-        $purchase = Purchase::with('purchaseDetails')->with('user')->where('user_id', auth()->user()->id)->whereBetween('date',[$from,$to])->get();
-        $sale = Sale::with('saleDetails')->with('user')->where('user_id', auth()->user()->id)->whereBetween('date',[$from,$to])->get();
-        $data = $sale->merge($purchase);
-        $urlPost = route('report.show');
-        $data->sortBy('date');
-        // dd($data);
-        $income = $sale->sum('total_amount');
-        $outcome = $purchase->sum('total_amount');
-        $profit = $income - $outcome;
+        $purchases = PurchaseResource::collection(Purchase::with('purchaseDetails')->with('user')->where('user_id', auth()->user()->id)->whereBetween('date',[$from,$to])->paginate(10));
+        $sales = SalesResource::collection(Sale::with('saleDetails')->with('user')->where('user_id', auth()->user()->id)->whereBetween('date',[$from,$to])->paginate(10));
+        $totalBenefit = 0;
+        $totalIncome = $sales->sum('total_amount');
+        $totalExpense = $purchases->sum('total_amount');
+        foreach($sales as $sale){
+            foreach($sale->saleDetails as $saleDetail){
+                $totalBenefit += $saleDetail->unit_price * $saleDetail->quantity;
+            }
+        }
+        $totalBenefit = $totalIncome - $totalBenefit;
         return Inertia::render('Reports/Index', [
-            'data' => $data, 
-            'urlPost' => $urlPost,
-            'income' => $income,
-            'outcome' => $outcome,
-            'profit' => $profit
+            'totalIncome' => $totalIncome, 
+            'totalExpense' => $totalExpense, 
+            'totalBenefit' => $totalBenefit, 
+            'sales' => $sales,
+            'purchases' => $purchases
             ]);
     }
 
