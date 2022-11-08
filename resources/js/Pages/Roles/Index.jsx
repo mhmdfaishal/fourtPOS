@@ -52,7 +52,7 @@ export default function Index(props) {
                                     <h6>Roles table</h6>
                                 </div>
                                 <div className="col-md-6 d-flex justify-content-end">
-                                    <button type="button"  onClick={() => createPage()} className="btn bg-gradient-success btn-block mb-3" data-bs-toggle="modal" data-bs-target="#exampleModalMessage">
+                                    <button type="button"  onClick={() => createPage()} className="btn btn-teal-orange btn-block mb-3" data-bs-toggle="modal" data-bs-target="#exampleModalMessage">
                                         Create New Role
                                     </button>
                                 </div>
