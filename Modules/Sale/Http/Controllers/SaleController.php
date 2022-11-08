@@ -53,65 +53,65 @@ class SaleController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function store(StoreSaleRequest $request)
-    {
-        DB::transaction(function () use ($request) {
-            $due_amount = $request->total_amount - $request->paid_amount;
+    // public function store(StoreSaleRequest $request)
+    // {
+    //     DB::transaction(function () use ($request) {
+    //         $due_amount = $request->total_amount - $request->paid_amount;
 
-            if ($due_amount == $request->total_amount) {
-                $payment_status = 'Unpaid';
-            } elseif ($due_amount > 0) {
-                $payment_status = 'Partial';
-            } else {
-                $payment_status = 'Paid';
-            }
+    //         if ($due_amount == $request->total_amount) {
+    //             $payment_status = 'Unpaid';
+    //         } elseif ($due_amount > 0) {
+    //             $payment_status = 'Partial';
+    //         } else {
+    //             $payment_status = 'Paid';
+    //         }
 
-            $sale = Sale::create([
-                'date' => $request->date,
-                'user_id' => auth()->user()->id,
-                'tax_percentage' => $request->tax_percentage,
-                // 'tax_amount' => Cart::instance('sale')->tax() * 100,
-                'total_amount' => $request->total_amount * 100,
-                'paid_amount' => $request->paid_amount * 100,
-                'payment_method' => $request->payment_method,
-                'payment_status' => $payment_status,
-            ]);
+    //         $sale = Sale::create([
+    //             'date' => $request->date,
+    //             'user_id' => auth()->user()->id,
+    //             'tax_percentage' => $request->tax_percentage,
+    //             // 'tax_amount' => Cart::instance('sale')->tax() * 100,
+    //             'total_amount' => $request->total_amount * 100,
+    //             'paid_amount' => $request->paid_amount * 100,
+    //             'payment_method' => $request->payment_method,
+    //             'payment_status' => $payment_status,
+    //         ]);
 
-            foreach (Cart::instance('sale')->content() as $cart_item) {
-                $product = Product::findOrFail($cart_item->id);
-                SaleDetails::create([
-                    'sale_id' => $sale->id,
-                    'product_id' => $cart_item->id,
-                    'product_name' => $cart_item->name,
-                    'product_code' => $cart_item->options->code,
-                    'price' => $cart_item->price * 100,
-                    'quantity' => $cart_item->qty,
-                    'sub_total' => $cart_item->options->sub_total * 100,
-                ]);
+    //         foreach (Cart::instance('sale')->content() as $cart_item) {
+    //             $product = Product::findOrFail($cart_item->id);
+    //             SaleDetails::create([
+    //                 'sale_id' => $sale->id,
+    //                 'product_id' => $cart_item->id,
+    //                 'product_name' => $cart_item->name,
+    //                 'product_code' => $cart_item->options->code,
+    //                 'price' => $cart_item->price * 100,
+    //                 'quantity' => $cart_item->qty,
+    //                 'sub_total' => $cart_item->options->sub_total * 100,
+    //             ]);
 
-                if ($request->status == 'Shipped' || $request->status == 'Completed') {
-                    $product = Product::findOrFail($cart_item->id);
-                    $product->update([
-                        'product_quantity' => $product->product_quantity - $cart_item->qty
-                    ]);
-                }
-            }
+    //             if ($request->status == 'Shipped' || $request->status == 'Completed') {
+    //                 $product = Product::findOrFail($cart_item->id);
+    //                 $product->update([
+    //                     'product_quantity' => $product->product_quantity - $cart_item->qty
+    //                 ]);
+    //             }
+    //         }
 
-            Cart::instance('sale')->destroy();
+    //         Cart::instance('sale')->destroy();
 
-            if ($sale->paid_amount > 0) {
-                SalePayment::create([
-                    'sale_id' => $sale->id,
-                    'date' => $request->date,
-                    'amount' => $sale->paid_amount,
-                    'payment_method' => $request->payment_method,
-                    'reference' => 'INV/'.$sale->reference,
-                ]);
-            }
-        });
+    //         if ($sale->paid_amount > 0) {
+    //             SalePayment::create([
+    //                 'sale_id' => $sale->id,
+    //                 'date' => $request->date,
+    //                 'amount' => $sale->paid_amount,
+    //                 'payment_method' => $request->payment_method,
+    //                 'reference' => 'INV/'.$sale->reference,
+    //             ]);
+    //         }
+    //     });
 
-        return redirect()->route('sales.index')->with('success', 'Sale created successfully.');
-    }
+    //     return redirect()->route('sales.index')->with('success', 'Sale created successfully.');
+    // }
 
     /**
      * Show the specified resource.

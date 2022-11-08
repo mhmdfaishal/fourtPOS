@@ -1,13 +1,48 @@
 import React, { useEffect, useState } from 'react'
 import Base from '../Layouts/Base'
 import ReactApexChart from 'react-apexcharts'
+import { includes } from 'lodash';
 
 export default function Dashboard(props) {
     const {data: totalCategories} = props.totalCategories; 
     const {data: totalProducts} = props.totalProducts;
     const {data: totalSales} = props.totalSales;
     const {data: totalPurchases} = props.totalPurchases;
+    const {sale, outcome} = props;
+  
     const [state, setState] = useState([])
+
+    var dataIncome = [0]
+    var dataIncomeDate = ["11/1/2022"]
+    
+    var dataSale = [0]
+    var dataSaleDate = ["11/1/2022"]
+
+    sale.forEach((item) => {
+        if(dataIncomeDate.includes(item.date)){
+          var idx = dataIncomeDate.indexOf(item.date)
+          dataIncome[idx] = dataIncome[idx] + item.sum_of_sub_total
+          dataSale[idx] += 1
+        }else {
+          dataIncomeDate.push(item.date)
+          dataIncome.push(item.sum_of_sub_total)
+          dataSale.push(1)
+          dataSaleDate.push(item.date)
+        }
+    })
+
+    var dataOutcome = [0]
+    var dataOutcomeDate = ["11/1/2022"]
+    outcome.forEach((item) => {
+        if(dataOutcomeDate.includes(item.date)){
+          var idx = dataOutcomeDate.indexOf(item.date)
+          dataOutcome[idx] = dataOutcome[idx] + item.total_amount
+        }else {
+          dataOutcomeDate.push(item.date)
+          dataOutcome.push(item.total_amount)
+        }
+    })
+
     // set ReactApexChart options
     const optionsSales = {
         chart: {
@@ -20,7 +55,7 @@ export default function Dashboard(props) {
           },
           xaxis: {
             type: 'datetime',
-            categories: ['1/11/2000', '2/11/2000', '3/11/2000', '4/11/2000', '5/11/2000', '6/11/2000', '7/11/2000', '8/11/2000', '9/11/2000', '10/11/2000', '11/11/2000', '12/11/2000', '1/11/2001', '2/11/2001', '3/11/2001','4/11/2001' ,'5/11/2001' ,'6/11/2001'],
+            categories: dataSaleDate,
             tickAmount: 10,
             labels: {
               formatter: function(value, timestamp, opts) {
@@ -50,10 +85,6 @@ export default function Dashboard(props) {
               stops: [0, 100, 100, 100]
             },
           },
-          yaxis: {
-            min: 0,
-            max: 100
-          }
         }
     const optionsIncome = {
         chart: {
@@ -66,7 +97,7 @@ export default function Dashboard(props) {
           },
           xaxis: {
             type: 'datetime',
-            categories: ['1/11/2000', '2/11/2000', '3/11/2000', '4/11/2000', '5/11/2000', '6/11/2000', '7/11/2000', '8/11/2000', '9/11/2000', '10/11/2000', '11/11/2000', '12/11/2000', '1/11/2001', '2/11/2001', '3/11/2001','4/11/2001' ,'5/11/2001' ,'6/11/2001'],
+            categories: dataIncomeDate,
             tickAmount: 10,
             labels: {
               formatter: function(value, timestamp, opts) {
@@ -96,10 +127,10 @@ export default function Dashboard(props) {
               stops: [0, 100, 100, 100]
             },
           },
-          yaxis: {
-            min: 0,
-            max: 100
-          }
+          // yaxis: {
+          //   min: 0,
+          //   max: 100
+          // }
         }
     const optionsOutcome = {
         chart: {
@@ -112,7 +143,7 @@ export default function Dashboard(props) {
           },
           xaxis: {
             type: 'datetime',
-            categories: ['1/11/2000', '2/11/2000', '3/11/2000', '4/11/2000', '5/11/2000', '6/11/2000', '7/11/2000', '8/11/2000', '9/11/2000', '10/11/2000', '11/11/2000', '12/11/2000', '1/11/2001', '2/11/2001', '3/11/2001','4/11/2001' ,'5/11/2001' ,'6/11/2001'],
+            categories: dataOutcomeDate,
             tickAmount: 10,
             labels: {
               formatter: function(value, timestamp, opts) {
@@ -142,26 +173,23 @@ export default function Dashboard(props) {
               stops: [0, 100, 100, 100]
             },
           },
-          yaxis: {
-            min: 0,
-            max: 100
-          }
         }
     
     // set ReactApexChart series
     const seriesSales = [{
         name: 'Sales',
-        data: [4, 3, 10, 9, 29, 19, 22, 9, 12, 7, 19, 5, 13, 9, 17, 2, 7, 5]
+        data: dataSale
     }]
     // set ReactApexChart series
+
     const seriesIncome = [{
         name: 'Income',
-        data: [4, 3, 10, 9, 29, 19, 22, 9, 12, 7, 19, 5, 13, 9, 17, 2, 7, 5]
+        data: dataIncome,
     }]
     // set ReactApexChart series
     const seriesOutcome = [{
         name: 'Outcome',
-        data: [4, 3, 10, 9, 29, 19, 22, 9, 12, 7, 19, 5, 13, 9, 17, 2, 7, 5]
+        data: dataOutcome,
     }]
 
     return (

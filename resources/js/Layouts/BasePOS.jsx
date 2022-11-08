@@ -8,7 +8,7 @@ import Footer from '../Components/Cashier/Footer'
 
 export default function BasePOS({children, title}) {
     const { flash } = usePage().props;
-    
+
     flash.type && toast[flash.type](flash.message)
 
     return (

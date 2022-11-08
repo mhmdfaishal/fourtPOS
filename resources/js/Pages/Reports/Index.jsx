@@ -76,11 +76,11 @@ export default function Index(props) {
                                     <div className="d-flex flex-row">
                                       <div className="flex-grow-1 m-2">
                                         <label className="mt-2" htmlFor="start_date">Tanggal Awal :</label>
-                                        <input onChange={handleChange} className="w-100 p-1 " type="date" name="start_date" id="start_date" required/>
+                                        <input onChange={handleChange} className="w-100 p-1 form-control" type="date" name="start_date" id="start_date" required/>
                                       </div>
                                       <div className="flex-grow-1 m-2" width="100%">
                                         <label className="mt-2" htmlFor="end_date">Tanggal Akhir :</label>
-                                        <input onChange={handleChange} className="w-100 p-1" type="date" name="end_date" id="end_date" required/>
+                                        <input onChange={handleChange} className="w-100 p-1 form-control" type="date" name="end_date" id="end_date" required/>
                                       </div>
                                     </div>
                                     <div className="pb-2 pt-2 px-3 text-center">

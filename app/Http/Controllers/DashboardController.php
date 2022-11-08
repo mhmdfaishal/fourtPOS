@@ -26,12 +26,19 @@ class DashboardController extends Controller
         $totalSales = TotalSaleResources::collection(Sale::where('user_id', auth()->user()->id)->get());
         $totalPurchases = TotalPurchasesResources::collection(Purchase::where('user_id', auth()->user()->id)->get());
 
+        $sale = Sale::whereHas('saleDetails', function($query) {
+            $query->where('user_id', auth()->user()->id);
+        })->get()->toArray();
+
+        $outcome = Purchase::where('user_id', auth()->user()->id)->get()->toArray();
         return inertia('Dashboard',
             [
                 'totalProducts' => $totalProducts,
                 'totalCategories' => $totalCategories,
                 'totalSales' => $totalSales,
                 'totalPurchases' => $totalPurchases,
+                'sale' => $sale,
+                'outcome'   => $outcome,
             ]
         );
     }
