@@ -11,7 +11,7 @@ class Sale extends Model
     use HasFactory;
 
     protected $guarded = [];
-    protected $appends = ['user_name','sale_details'];
+    protected $appends = ['user_name','sale_details', 'sum_of_sub_total'];
 
     public function user(){
         return $this->belongsTo(User::class, 'user_id', 'id');
@@ -34,7 +34,16 @@ class Sale extends Model
         return $this->user->name;
     }
     public function getSaleDetailsAttribute() {
-        return $this->saleDetails()->get();
+        $user = User::where('id', auth()->user()->id)->first();
+        if ($user->hasRole('Super Admin')){
+            return $this->saleDetails()->get();
+        } else {
+            return $this->saleDetails()->where('user_id', auth()->user()->id)->get();
+        }
+    }
+
+    public function getSumOfSubTotalAttribute() {
+        return User::where('id', auth()->user()->id)->first()->hasRole('Super Admin') ? $this->sale_details->sum('sub_total') + $this->tax_amount :  $this->sale_details->sum('sub_total');
     }
 
     public function scopeCompleted($query) {

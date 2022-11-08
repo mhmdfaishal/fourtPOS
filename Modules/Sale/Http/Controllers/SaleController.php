@@ -2,6 +2,7 @@
 
 namespace Modules\Sale\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +26,15 @@ class SaleController extends Controller
     public function index()
     {
         // abort_if(Gate::denies('access_sales'), 403);
-        $getAllSales = SalesResource::collection(Sale::latest()->paginate(10));
+        // dd('test');
+        $user = User::where('id', auth()->user()->id)->first();
+        if ($user->hasRole('Super Admin')){
+            $getAllSales = SalesResource::collection(Sale::latest()->paginate(10));
+        } else {
+            $getAllSales = SalesResource::collection(Sale::whereHas('saleDetails', function($query) {
+                $query->where('user_id', auth()->user()->id);
+            })->latest()->paginate(10));
+        }
         return Inertia::render('Sales/Index', ['sales' => $getAllSales]);
     }
 

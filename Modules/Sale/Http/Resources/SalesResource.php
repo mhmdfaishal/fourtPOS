@@ -28,6 +28,7 @@ class SalesResource extends JsonResource
             'payment_status' => $this->payment_status,
             'user_name' => $this->user_name,
             'sale_details' => $this->sale_details,
+            'sum_of_sub_total' => $this->sum_of_sub_total,
         ];
     }
 }

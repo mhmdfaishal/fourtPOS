@@ -17,7 +17,7 @@ export default function Index(props) {
         setState(sale);
         detailDialogHandler();
     }
-
+    console.log(sales)
     return (
         <>
             <div className="container-fluid py-4">
@@ -65,7 +65,7 @@ export default function Index(props) {
                                                     <span className="text-xs font-weight-bold">{sale.notes}</span>
                                                 </td>
                                                 <td className='text-left'>
-                                                    <span className="text-xs font-weight-bold">{sale.total_amount}</span>
+                                                    <span className="text-xs font-weight-bold">{sale.sum_of_sub_total}</span>
                                                 </td>
                                                 <td className="align-middle text-center" width="5%">
                                                 <div>
