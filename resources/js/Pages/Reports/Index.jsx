@@ -168,7 +168,7 @@ export default function Index(props) {
                                                     <span className="text-secondary text-xs font-weight-bold">{sale.reference}</span>
                                                 </td>
                                                 <td className="align-middle text-center text-sm">
-                                                    <span className="text-secondary text-xs font-weight-bold">{sale.total_amount}</span>
+                                                    <span className="text-secondary text-xs font-weight-bold">{sale.sum_of_sub_total}</span>
                                                 </td>
                                                 <td className="align-middle text-center" width="5%">
                                                 <div>
@@ -260,7 +260,7 @@ export default function Index(props) {
                 </div>
                 <nav aria-label="Page navigation example">
                     <ul className="pagination justify-content-center">
-                    { metaSales.links.map((link, k) => (
+                    { metaPurchases.links.map((link, k) => (
                             <li key={k} className="page-item">
                             <Link disabled={link.url == null ? true : false} as="button" className={`${link.active && 'bg-info'} ${link.url == null && 'btn bg-gradient-secondary text-white'} page-link`} href={link.url || ''} dangerouslySetInnerHTML={{ __html: link.label }}/>
                             </li>
