@@ -26,6 +26,13 @@ class Purchase extends Model
     protected $appends = ['user_name','purchase_details'];
     protected $with = ['purchaseDetails'];
 
+    // public static function boot () {
+    //     static::creating(function($model) {
+    //         $number = Purchase::max('id') + 1;
+    //         $model->reference = make_reference_id('purchase', $number);
+    //     });
+    // }
+
     public function purchaseDetails() {
         return $this->hasMany(PurchaseDetail::class, 'purchase_id', 'id');
     }

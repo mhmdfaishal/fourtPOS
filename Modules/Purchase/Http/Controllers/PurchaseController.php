@@ -2,12 +2,14 @@
 
 namespace Modules\Purchase\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Modules\Purchase\Entities\Purchase;
 use Inertia\Inertia;
 use Modules\Purchase\Http\Requests\PurchaseRequest;
+use Modules\Report\Http\Resources\PurchaseResource;
 
 class PurchaseController extends Controller
 {
@@ -17,8 +19,12 @@ class PurchaseController extends Controller
      */
     public function index()
     {
-        $data = Purchase::with('purchaseDetails')->where('user_id', auth()->user()->id)->get();
-        return Inertia::render('Purchases/Index', ['data' => $data]);
+        $user = User::where('id', auth()->user()->id)->first();
+        $user->hasRole('Super Admin') ?
+        $data = PurchaseResource::collection(Purchase::with('purchaseDetails')->latest()->paginate(10)) : 
+        $data = PurchaseResource::collection(Purchase::with('purchaseDetails')->where('user_id', auth()->user()->id)->latest()->paginate(10));
+
+        return Inertia::render('Purchase/Index', ['purchases' => $data]);
     }
 
     /**
@@ -36,10 +42,16 @@ class PurchaseController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function store(Request $request, Purchase $purchase)
+    public function store(PurchaseRequest $request, Purchase $purchase)
     {
-        // dd($request->all());
         $purchase->fill($request->only($purchase->getFillable()));
+        $purchase->discount_percentage = 0;
+        $purchase->discount_amount = 0;
+        $purchase->paid_amount = 0;
+        $purchase->payment_method = 0;
+        $purchase->payment_status = 0;
+        $purchase->status = 0;
+        
         $purchase->user_id = auth()->user()->id;
         $purchase->reference = 'PUR-'.date('YmdHis');
         $purchase->save();
@@ -113,6 +125,6 @@ class PurchaseController extends Controller
     {
         $purchase->purchaseDetails()->delete();
         $purchase->delete();
-        // return redirect()->route('purchase.index');
+        return redirect()->route('purchase.index');
     }
 }

@@ -19,7 +19,7 @@ export default function CreateProduct({close, categories}) {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        console.log(data);
+        // console.log(data);
         post(route('product.create.store'), {
             data,
             onSuccess: () => {

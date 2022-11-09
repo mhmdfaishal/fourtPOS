@@ -1,7 +1,7 @@
 import { useForm } from '@inertiajs/inertia-react'
 import React, { useEffect } from 'react'
 
-export default function DetailPurchases({close, model}) {
+export default function EditPurchases({close, model}) {
 
     const {data, setData, put, reset, errors} = useForm(
         { 
@@ -33,23 +33,23 @@ export default function DetailPurchases({close, model}) {
 
                         <div className="form-group">
                             <label htmlFor="reference" className="col-form-label">Reference:</label>
-                            <input type="text" className="form-control" name='reference' value={data.reference} id="reference" disabled/>
+                            <input type="text" className="form-control" name='reference' value={data.reference} id="reference" />
                         </div>
                         <div className="form-group">
                             <label htmlFor="user_id" className="col-form-label">User:</label>
-                            <input type="text" className="form-control" name='user_id' value={data.user} id="user_id" disabled/>
+                            <input type="text" className="form-control" name='user_id' value={data.user} id="user_id" />
                         </div>
                         <div className="form-group">
                             <label htmlFor="date" className="col-form-label">Date:</label>
-                            <input type="date" className="form-control" name='date' value={data.date} id="date" disabled/>
+                            <input type="date" className="form-control" name='date' value={data.date} id="date" />
                         </div>
                         <div className="form-group">
                             <label htmlFor="total_amount" className="col-form-label">Total Amount:</label>
-                            <input type="number" className="form-control" name='total_amount' value={data.total_amount} id="total_amount" disabled/>
+                            <input type="number" className="form-control" name='total_amount' value={data.total_amount} id="total_amount" />
                         </div>
                         <div className="form-group">
                             <label htmlFor="notes" className="col-form-label">Notes:</label>
-                            <textarea className="form-control" name='notes' value={data.notes} id="notes" disabled></textarea>
+                            <textarea className="form-control" name='notes' value={data.notes} id="notes" ></textarea>
                         </div>
                         <table style={{overflowX: 'auto', width: '100%'}}>
                             <thead>
