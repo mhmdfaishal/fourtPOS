@@ -62,7 +62,7 @@ export default function Index(props) {
                                     <h6>Products</h6>
                                 </div>
                                 <div className="col-md-6 d-flex justify-content-end">
-                                    <button onClick={addDialogHandler} type="button" className="btn bg-gradient-success btn-block mb-3" data-bs-toggle="modal" data-bs-target="#exampleModalMessage">
+                                    <button onClick={addDialogHandler} type="button" className="btn btn-teal-orange btn-block mb-3" data-bs-toggle="modal" data-bs-target="#exampleModalMessage">
                                         Create New Product
                                     </button>
                                 </div>

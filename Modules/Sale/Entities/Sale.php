@@ -43,7 +43,7 @@ class Sale extends Model
     }
 
     public function getSumOfSubTotalAttribute() {
-        return User::where('id', auth()->user()->id)->first()->hasRole('Super Admin') ? $this->sale_details->sum('sub_total') + $this->tax_amount :  $this->sale_details->sum('sub_total');
+        return $this->sale_details->sum('sub_total');
     }
 
     public function scopeCompleted($query) {

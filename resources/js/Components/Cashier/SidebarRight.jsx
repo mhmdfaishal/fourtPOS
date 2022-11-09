@@ -1,18 +1,14 @@
-import { Link } from '@inertiajs/inertia-react'
-import React from 'react'
-import Logo from "../Logo";
+import React, { useEffect } from 'react'
 import { convertToIDR } from "../../Utils/helper";
+import { Inertia } from '@inertiajs/inertia';
 
 export default function SidebarRight() {
+
     const [isOpen, setIsOpen] = React.useState(true);
-    const [itemQuantity_1, setItemQuantity_1] = React.useState(1);
-    const [itemQuantity_2, setItemQuantity_2] = React.useState(1);
-    const [price_1, setPrice_1] = React.useState(10000);
-    const [price_2, setPrice_2] = React.useState(20000);
-    const [subTotal, setSubTotal] = React.useState(30000);
+    const [subTotal, setSubTotal] = React.useState(0);
     const [tax, setTax] = React.useState(0);
-    const [discount, setDiscount] = React.useState(0);
-    const [totalBill, setTotalBill] = React.useState(30000);
+    const [totalBill, setTotalBill] = React.useState(0);
+    const [cart, setCart] = React.useState([]);
 
     const hideSidebarRight = () => {
         document.querySelector('.sidenav-pos').style.transform = "translateX(85%)";
@@ -24,7 +20,6 @@ export default function SidebarRight() {
             document.querySelector('#grid-system').classList.add("row-cols-4");
         }
         setIsOpen(false);
-        console.log(isOpen)
     }
 
     const showSidebarRight = () => {
@@ -38,37 +33,80 @@ export default function SidebarRight() {
         setIsOpen(true);
     }
 
-    
-    const addQuantity = (e,idx) => {
-        e.preventDefault();
-        if(idx === 1){
-            setItemQuantity_1(itemQuantity_1 + 1);
-            setSubTotal(subTotal + price_1);
-            setTotalBill(subTotal + price_1);
-        }
-        if(idx === 2){
-            setItemQuantity_2(itemQuantity_2 + 1);
-            setSubTotal(subTotal + price_2);
-            setTotalBill(subTotal + price_2);
+    const calculateSubTotal = () => {
+        let subTotal = 0;
+        cart.forEach((item) => {
+            subTotal += item.product_price * item.quantity;
+        });
+        setSubTotal(subTotal);
+    }
+
+    const calculateTotalBill = () => {
+        let totalBill = subTotal + tax;
+        setTotalBill(totalBill);
+    }
+
+    const setCurrentCart = () => {
+        let getCart = JSON.parse(localStorage.getItem('cart'));
+        if (getCart) {
+            setCart(getCart);
+        }else if (!getCart) {
+            localStorage.setItem('cart', JSON.stringify([]));
+            setCart([]);
         }
     }
 
-    const substractQuantity = (e,idx) => {
+    useEffect(() => {
+        setCurrentCart();
+        calculateSubTotal();
+        calculateTotalBill();
+
+    }, [cart, subTotal, totalBill]);
+
+    
+    const addQuantity = (e,item) => {
         e.preventDefault();
-        if(idx === 1){
-            if (itemQuantity_1 > 1) {
-                setItemQuantity_1(itemQuantity_1 - 1);
-                setSubTotal(subTotal - price_1);
-                setTotalBill(subTotal - price_1);
-            }
+        const cart = JSON.parse(localStorage.getItem('cart'));
+        const index = cart.findIndex((cartItem) => cartItem.id === item.id);
+        cart[index].quantity += 1;
+        localStorage.setItem('cart', JSON.stringify(cart));
+        setCart(cart);
+    }
+
+    const substractQuantity = (e,item) => {
+        e.preventDefault();
+        const cart = JSON.parse(localStorage.getItem('cart'));
+        const index = cart.findIndex((cartItem) => cartItem.id === item.id);
+        cart[index].quantity -= 1;
+
+        if (cart[index].quantity == 0) {
+            cart.splice(index, 1);
         }
-        if(idx === 2){
-            if (itemQuantity_2 > 1) {
-                setItemQuantity_2(itemQuantity_2 - 1);
-                setSubTotal(subTotal - price_2);
-                setTotalBill(subTotal - price_2);
-            }
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+        setCart(cart);
+    }
+
+    const storePayment = (e) => {
+        e.preventDefault();
+        const data = {
+            'cart': cart,
+            'sub_total': subTotal,
+            'total_bill': totalBill,
+            'no_table': "1",
+            'tax_amount': tax,
         }
+        Inertia.post(route('store.payment'), data);
+        //set cart to empty
+        localStorage.setItem('cart', JSON.stringify([]));
+        setCart([]);
+        //set subTotal to 0
+        setSubTotal(0);
+        //set totalBill to 0
+        setTotalBill(0);
+        //set tax to 0
+        setTax(0);
+
     }
 
     return (        
@@ -98,54 +136,32 @@ export default function SidebarRight() {
                     isOpen ? (      
                     <>
                         <ul className="navbar-nav list-item-cart">
+                            {cart ? cart.map((item, idx) => (
                             <li className="nav-item d-flex">
-                                <img src="/img/cheesecake.jpg" alt="item-cart" className='img-item-cart' />
+                                <img src={item.image} alt="item-cart" className='img-item-cart' />
                                 <div className='d-flex flex-column ps-3 w-100'>
                                     <h6 className="text-dark mb-0">
-                                        Cheesecake
+                                        {item.product_name}
                                     </h6>
                                     <h6 className="text-dark mb-0">
-                                        {convertToIDR(price_1)}
+                                        {convertToIDR(item.product_price)}
                                     </h6>
                                     <div className="btn-set-quantity d-flex align-items-center mt-2 mb-3 ms-5">
                                         <button className="btn btn-icon btn-primary mx-0 py-2 m-0" type="button" onClick={
-                                                                                                            (e) => {substractQuantity(e,1)}
+                                                                                                            (e) => {substractQuantity(e,item)}
                                                                                                             }>
                                             <span className="btn-inner-icon"><i className="fas fa-minus"></i></span>
                                         </button>
-                                        <h3 className="quantity fs-6 pt-1" id='quantity_1'>{itemQuantity_1}</h3>
+                                        <h3 className="quantity fs-6 pt-1" id='quantity'>{item.quantity}</h3>
                                         <button className="btn btn-icon btn-primary py-2 m-0" type="button" onClick={
-                                                                                                            (e) => {addQuantity(e,1)}
+                                                                                                            (e) => {addQuantity(e,item)}
                                                                                                             }>
                                             <span className="btn-inner-icon"><i className="fas fa-plus"></i></span>
                                         </button>
                                     </div>
                                 </div>
                             </li>
-                            <li className="nav-item d-flex">
-                                <img src="/img/cheesecake.jpg" alt="item-cart" className='img-item-cart' />
-                                <div className='d-flex flex-column ps-3 w-100'>
-                                <h6 className="text-dark mb-0">
-                                        Cheesecake
-                                    </h6>
-                                    <h6 className="text-dark mb-0">
-                                        {convertToIDR(price_2)}
-                                    </h6>
-                                    <div className="btn-set-quantity d-flex align-items-center mt-2 mb-3 ms-5">
-                                        <button className="btn btn-icon btn-primary py-2 m-0" type="button" onClick={
-                                                                                                            (e) => {substractQuantity(e,2)}
-                                                                                                            }>
-                                            <span className="btn-inner--icon"><i className="fas fa-minus"></i></span>
-                                        </button>
-                                        <h3 className="quantity fs-6 pt-1" id='quantity_2'>{itemQuantity_2}</h3>
-                                        <button className="btn btn-icon btn-primary py-2 m-0" type="button" onClick={
-                                                                                                            (e) => {addQuantity(e,2)}
-                                                                                                            }>
-                                            <span className="btn-inner--icon"><i className="fas fa-plus"></i></span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </li>
+                            )) : ''}
                         </ul>
                         <div className="bottom-0 position-sticky">
                             <div className="detail-price d-flex flex-column">
@@ -157,10 +173,6 @@ export default function SidebarRight() {
                                     <h2>Tax</h2>
                                     <h2>{convertToIDR(tax)}</h2>
                                 </div>
-                                <div className="discount d-flex justify-content-between">
-                                    <h2>Discount</h2>
-                                    <h2>{convertToIDR(discount)}</h2>
-                                </div>
                                 <hr />
                                 <div className="total d-flex justify-content-between">
                                     <h2>Total</h2>
@@ -168,7 +180,7 @@ export default function SidebarRight() {
                                 </div>
                             </div>
                             <div className="d-flex justify-content-center">
-                                <button className='btn btn-payment fs-6'>
+                                <button className='btn btn-payment fs-6' onClick={storePayment}>
                                     Continue to Payment
                                 </button>
                             </div>

@@ -28,8 +28,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/destroy/{salePayment}', [SalePaymentsController::class, 'destroy'])->name('sale-payments.destroy');
     });
 
-    Route::get('pos', POSController::class)->name('list.merchant');
-    Route::get('pos/{id}', [POSController::class, 'showMerchant'])->name('show.merchant');
+    Route::get('cashier', POSController::class)->name('list.merchant');
+    Route::get('cashier/{id}', [POSController::class, 'showMerchant'])->name('show.merchant');
+    Route::post('cashier/payment', [POSController::class, 'storePayment'])->name('store.payment');
     //Generate PDF
     Route::get('/sales/pdf/{id}', function ($id) {
         $sale = Sale::findOrFail($id);
