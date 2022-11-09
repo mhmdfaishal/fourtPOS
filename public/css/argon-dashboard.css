@@ -26846,3 +26846,20 @@ input[type="search"] {
 .card-price{
   color: #238700;
 }
+
+.fs-catatan{
+  font-size: small !important;
+}
+
+.detail-price-summary{
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #dbdbdb;
+  border-radius: 0.5rem;
+}
+
+.detail-price-summary h2 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
