@@ -97,6 +97,7 @@ class PurchaseController extends Controller
      */
     public function update(PurchaseRequest $request, Purchase $purchase)
     {
+        dd($request->all());
         $purchase->fill($request->only($purchase->getFillable()));
         if($purchase->isDirty()){
             $purchase->save();
