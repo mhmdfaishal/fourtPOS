@@ -45,12 +45,6 @@ class PurchaseController extends Controller
     public function store(PurchaseRequest $request, Purchase $purchase)
     {
         $purchase->fill($request->only($purchase->getFillable()));
-        $purchase->discount_percentage = 0;
-        $purchase->discount_amount = 0;
-        $purchase->paid_amount = 0;
-        $purchase->payment_method = 0;
-        $purchase->payment_status = 0;
-        $purchase->status = 0;
         
         $purchase->user_id = auth()->user()->id;
         $purchase->reference = 'PUR-'.date('YmdHis');

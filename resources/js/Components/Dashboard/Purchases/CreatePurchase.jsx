@@ -59,6 +59,7 @@ export default function CreatePurchase({close}) {
     const onSubmit = (e) => {
       e.preventDefault()
       let payload = {...data}
+      payload.products = []
       payload.products.push(...formValues)
       setData(payload)
       post(route('purchase.create.store'), {
@@ -68,6 +69,11 @@ export default function CreatePurchase({close}) {
           close()
         },
       });
+      setFormValues([{
+        product_name: "",
+        quantity : "",
+        price : ""
+      }])
     }
     return (
         <>
@@ -88,7 +94,7 @@ export default function CreatePurchase({close}) {
                             <span className="mx-3">
                             <button className="btn bg-gradient-success btn-block px-2 py-1 mt-3 ml-5" type="button" onClick={() => addFormFields()}>+</button>
                             </span>
-                            {formValues.map((formValue, index) => (
+                            {formValues?.map((formValue, index) => (
                             <div className='card mb-2'>
                               {
                                 index ? 
