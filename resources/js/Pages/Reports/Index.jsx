@@ -194,7 +194,7 @@ export default function Index(props) {
                     <ul className="pagination justify-content-center">
                     { metaSales.links.map((link, k) => (
                       <li key={k} className="page-item">
-                                <Link disabled={link.url == null ? true : false} as="button" className={`${link.active && 'bg-info'} ${link.url == null && 'btn bg-gradient-secondary text-white'} page-link`} href={link.url || ''} dangerouslySetInnerHTML={{ __html: link.label }}/>
+                                <Link disabled={link.url == null ? true : false} as="button" className={`${link.active && 'bg-info text-white'} ${link.url == null && 'btn bg-gradient-secondary text-white'} page-link`} href={link.url || ''} dangerouslySetInnerHTML={{ __html: link.label }}/>
                             </li>
                         ))}
                         </ul>
@@ -262,7 +262,7 @@ export default function Index(props) {
                     <ul className="pagination justify-content-center">
                     { metaSales.links.map((link, k) => (
                             <li key={k} className="page-item">
-                            <Link disabled={link.url == null ? true : false} as="button" className={`${link.active && 'bg-info'} ${link.url == null && 'btn bg-gradient-secondary text-white'} page-link`} href={link.url || ''} dangerouslySetInnerHTML={{ __html: link.label }}/>
+                            <Link disabled={link.url == null ? true : false} as="button" className={`${link.active && 'bg-info text-white'} ${link.url == null && 'btn bg-gradient-secondary text-white'} page-link`} href={link.url || ''} dangerouslySetInnerHTML={{ __html: link.label }}/>
                             </li>
                             ))}
                             </ul>
