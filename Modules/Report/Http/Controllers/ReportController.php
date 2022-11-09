@@ -2,6 +2,7 @@
 
 namespace Modules\Report\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Modules\Purchase\Entities\Purchase;
 use Illuminate\Http\Request;
@@ -20,9 +21,19 @@ class ReportController extends Controller
      */
     public function index(Request $request)
     {
-        $purchase = PurchaseResource::collection(Purchase::with('purchaseDetails')->with('user')->where('user_id', auth()->user()->id)->paginate(10));
-        $sales = SalesResource::collection(Sale::with('saleDetails')->with('user')->where('user_id', auth()->user()->id)->paginate(10));
-        $totalIncome = $sales->sum('total_amount');
+        $user = User::where('id', auth()->user()->id)->first();
+        if ($user->hasRole('Super Admin')){
+            $purchase = PurchaseResource::collection(Purchase::with('purchaseDetails')->with('user')->paginate(10));
+            $sales = SalesResource::collection(Sale::with('saleDetails')->with('user')->paginate(10));
+        } else {
+            $purchase = PurchaseResource::collection(Purchase::with('purchaseDetails')->with('user')->where('user_id', auth()->user()->id)->paginate(10));
+            $sales = SalesResource::collection(Sale::with('saleDetails')->with('user')
+                        ->whereHas('saleDetails', function($query)
+                        {
+                            $query->where('user_id', auth()->user()->id);
+                        })->paginate(10));
+        }
+        $totalIncome = $sales->sum('sum_of_sub_total');
         $totalExpense = $purchase->sum('total_amount');
         $totalBenefit = 0;
         foreach($sales as $sale){
@@ -68,10 +79,20 @@ class ReportController extends Controller
     {
         $from = $request->start_date;
         $to = $request->end_date;
-        $purchases = PurchaseResource::collection(Purchase::with('purchaseDetails')->with('user')->where('user_id', auth()->user()->id)->whereBetween('date',[$from,$to])->paginate(10));
-        $sales = SalesResource::collection(Sale::with('saleDetails')->with('user')->where('user_id', auth()->user()->id)->whereBetween('date',[$from,$to])->paginate(10));
+        $user = User::where('id', auth()->user()->id)->first();
+        if ($user->hasRole('Super Admin')){
+            $purchases = PurchaseResource::collection(Purchase::with('purchaseDetails')->with('user')->whereBetween('date',[$from,$to])->paginate(10));
+            $sales = SalesResource::collection(Sale::with('saleDetails')->with('user')->whereBetween('date',[$from,$to])->paginate(10));
+        } else {
+            $purchases = PurchaseResource::collection(Purchase::with('purchaseDetails')->with('user')->where('user_id', auth()->user()->id)->whereBetween('date',[$from,$to])->paginate(10));
+            $sales = SalesResource::collection(Sale::with('saleDetails')->with('user')
+                        ->whereHas('saleDetails', function($query)
+                        {
+                            $query->where('user_id', auth()->user()->id);
+                        })->whereBetween('date',[$from,$to])->paginate(10));
+        }
         $totalBenefit = 0;
-        $totalIncome = $sales->sum('total_amount');
+        $totalIncome = $sales->sum('sum_of_sub_total');
         $totalExpense = $purchases->sum('total_amount');
         foreach($sales as $sale){
             foreach($sale->saleDetails as $saleDetail){
