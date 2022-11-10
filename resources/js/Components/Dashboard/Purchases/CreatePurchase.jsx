@@ -59,7 +59,6 @@ export default function CreatePurchase({close}) {
     const onSubmit = (e) => {
       e.preventDefault()
       let payload = {...data}
-      payload.products = []
       payload.products.push(...formValues)
       setData(payload)
       post(route('purchase.create.store'), {
@@ -74,6 +73,12 @@ export default function CreatePurchase({close}) {
         quantity : "",
         price : ""
       }])
+      setData({
+        date: "",
+        total_amount: 0,
+        note: "",
+        products: [],
+      })
     }
     return (
         <>
