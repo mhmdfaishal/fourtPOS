@@ -11,6 +11,7 @@ use App\Http\Resources\TotalProductResources;
 use App\Http\Resources\TotalCategoryResources;
 use App\Http\Resources\TotalSaleResources;
 use App\Http\Resources\TotalPurchasesResources;
+use Illuminate\Support\Facades\Gate;
 class DashboardController extends Controller
 {
     /**
@@ -21,9 +22,13 @@ class DashboardController extends Controller
      */
     public function __invoke(Request $request)
     {
+        abort_if(Gate::denies('show_dashboard'), 403);
+
         $totalProducts = TotalProductResources::collection(Product::where('user_id', auth()->user()->id)->get());
         $totalCategories = TotalCategoryResources::collection(Category::where('user_id', auth()->user()->id)->get());
-        $totalSales = TotalSaleResources::collection(Sale::where('user_id', auth()->user()->id)->get());
+        $totalSales = TotalSaleResources::collection(Sale::whereHas('saleDetails', function($query) {
+            $query->where('user_id', auth()->user()->id);
+        })->get());
         $totalPurchases = TotalPurchasesResources::collection(Purchase::where('user_id', auth()->user()->id)->get());
 
         $sale = Sale::whereHas('saleDetails', function($query) {

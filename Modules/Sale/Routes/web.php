@@ -31,6 +31,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('cashier', POSController::class)->name('list.merchant');
     Route::get('cashier/{id}', [POSController::class, 'showMerchant'])->name('show.merchant');
     Route::post('cashier/payment', [POSController::class, 'storePayment'])->name('store.payment');
+    Route::get('cashier/show/invoice', [POSController::class, 'getInvoice'])->name('open.invoice');
     //Generate PDF
     Route::get('/sales/pdf/{id}', function ($id) {
         $sale = Sale::findOrFail($id);

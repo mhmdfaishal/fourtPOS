@@ -12,6 +12,7 @@ use Modules\Report\Http\Requests\ReportFilterRequest;
 use Modules\Sale\Entities\Sale;
 use Modules\Sale\Http\Resources\SalesResource;
 use Modules\Report\Http\Resources\PurchaseResource;
+use Illuminate\Support\Facades\Gate;
 
 class ReportController extends Controller
 {
@@ -21,6 +22,8 @@ class ReportController extends Controller
      */
     public function index(Request $request)
     {
+        abort_if(Gate::denies('access_reports'), 403);
+
         $user = User::where('id', auth()->user()->id)->first();
         if ($user->hasRole('Super Admin')){
             $purchase = PurchaseResource::collection(Purchase::with('purchaseDetails')->with('user')->paginate(10));
@@ -77,6 +80,7 @@ class ReportController extends Controller
      */
     public function show(ReportFilterRequest $request)
     {
+        abort_if(Gate::denies('access_reports'), 403);
         $from = $request->start_date;
         $to = $request->end_date;
         $user = User::where('id', auth()->user()->id)->first();

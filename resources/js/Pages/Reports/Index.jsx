@@ -119,7 +119,7 @@ export default function Index(props) {
                                         <td>{convertToIDR(totalExpense)}</td>
                                     </tr>
                                     <tr>
-                                        <th>Total Benefit</th>
+                                        <th>Total Profit</th>
                                         <td>:</td>
                                         <td>{convertToIDR(totalBenefit)}</td>
                                     </tr>

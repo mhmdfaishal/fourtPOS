@@ -26876,6 +26876,22 @@ input[type="search"] {
   margin-bottom: 0.5rem;
 }
 
+.card-product {
+  min-height: 33rem;
+}
+
+.zero-quantity{
+  background-color: #84848354 !important;
+}
+.zero-quantity-img{
+  opacity: 0.5;
+}
+
+.btn-disabled {
+  background-color: #84848354 !important;
+  box-shadow: #84848354 !important;
+}
+
 .login-page{
   background-repeat: no-repeat !important;
   background-size: cover !important;

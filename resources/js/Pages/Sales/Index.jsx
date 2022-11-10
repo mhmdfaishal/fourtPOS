@@ -10,14 +10,14 @@ import { convertToIDR } from "../../Utils/helper";
 export default function Index(props) {
 
     const {data: sales, links, meta} = props.sales; 
-
+    console.log(meta.links);
     const [state, setState] = useState([])
     const [detailDialogHandler, detailCloseTrigger, detailTrigger] = useDialog()
     const openDetailDialog = (sale) => {
         setState(sale);
         detailDialogHandler();
     }
-    console.log(sales)
+
     return (
         <>
             <div className="container-fluid py-4">
@@ -70,7 +70,7 @@ export default function Index(props) {
                                                 <td className="align-middle text-center" width="5%">
                                                 <div>
                                                     <button type="button" onClick={() => openDetailDialog(sale)} className="btn btn-youtube btn-icon-only">
-                                                        <span className="btn-inner--icon"><i class="fas fa-info-circle"></i></span>
+                                                        <span className="btn-inner--icon"><i className="fas fa-info-circle"></i></span>
                                                     </button> 
                                                 </div>
                                                 </td>
