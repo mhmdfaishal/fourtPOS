@@ -26,7 +26,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        // abort_if(Gate::denies('access_products'), 403);
+        abort_if(Gate::denies('show_products'), 403);
         $products = ProductResource::collection(Product::with('category')->where('user_id', auth()->user()->id)->paginate(10));
         $categories = CategoryResource::collection(Category::where('user_id', auth()->user()->id)->get());
         return Inertia::render('Products/Index', ['products' => $products,'categories' => $categories]);
@@ -39,7 +39,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        // abort_if(Gate::denies('create_products'), 403);
+        abort_if(Gate::denies('create_products'), 403);
         
         return Inertia::render('Product/AddForm', [
             'urlPost' => route('product.create.store'),
@@ -55,7 +55,8 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request, Product $product)
     {
-        // abort_if(Gate::denies('show_products'), 403);
+        abort_if(Gate::denies('create_products'), 403);
+
         $product->fill($request->only($product->getFillable()));
         $product->user_id = auth()->user()->id;
         $product->save();
@@ -85,7 +86,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        // abort_if(Gate::denies('edit_products'), 403);
+        abort_if(Gate::denies('edit_products'), 403);
 
         return Inertia::render('Product/EditForm', [
             'urlPost' => route('product.edit.post', $product->id),
@@ -101,8 +102,15 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+<<<<<<< HEAD
     public function update(EditProductRequest $request, Product $product)
     {;
+=======
+    public function update(ProductRequest $request, Product $product)
+    {
+        abort_if(Gate::denies('edit_products'), 403);
+
+>>>>>>> origin
         $product->fill($request->only($product->getFillable()));
         if($product->isDirty()) $product->save();
 
@@ -122,7 +130,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        // abort_if(Gate::denies('delete_products'), 403);
+        abort_if(Gate::denies('delete_products'), 403);
         
         $product->delete();
         return redirect()->route('product.index');

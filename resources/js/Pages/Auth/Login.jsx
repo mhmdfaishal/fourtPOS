@@ -16,7 +16,7 @@ export default function Login({ errors }) {
     }
     return (        
         <>
-            <div className="page-header min-vh-100">
+            <div className="page-header min-vh-100 login-page" style={{background: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url("/img/backgroundLogo.png")`}}>
                 <div className="container">
                     <div className="row">
                         <div className="col-xl-12 col-lg-5 col-md-7 d-flex flex-column align-items-center">
@@ -42,7 +42,7 @@ export default function Login({ errors }) {
                                                 <label className="form-check-label" htmlFor="rememberMe">Remember me</label>
                                             </div>
                                             <div className="text-center">
-                                                <button type="submit" className="btn btn-lg btn-gold btn-lg w-100 mt-4 mb-0">Sign in</button>
+                                                <button type="submit" className="btn btn-lg bg-orange-100 btn-lg w-100 mt-4 mb-0 text-white">Sign in</button>
                                             </div>
                                         </form>
                                     </div>

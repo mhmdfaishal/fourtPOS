@@ -8,6 +8,7 @@ use Illuminate\Routing\Controller;
 use Modules\Purchase\Entities\Purchase;
 use Inertia\Inertia;
 use Modules\Purchase\Http\Requests\PurchaseRequest;
+use Illuminate\Support\Facades\Gate;
 
 class PurchaseController extends Controller
 {
@@ -17,6 +18,7 @@ class PurchaseController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('show_purchases'), 403);
         $data = Purchase::with('purchaseDetails')->where('user_id', auth()->user()->id)->get();
         return Inertia::render('Purchases/Index', ['data' => $data]);
     }
@@ -27,6 +29,7 @@ class PurchaseController extends Controller
      */
     public function create()
     {
+        abort_if(Gate::denies('create_purchases'), 403);
         $urlPost = route('purchase.create.store');
         return Inertia::render('Purchases/AddForm', ['urlPost' => $urlPost]);
     }
@@ -38,6 +41,7 @@ class PurchaseController extends Controller
      */
     public function store(Request $request, Purchase $purchase)
     {
+        abort_if(Gate::denies('create_purchases'), 403);
         // dd($request->all());
         $purchase->fill($request->only($purchase->getFillable()));
         $purchase->user_id = auth()->user()->id;
@@ -72,6 +76,7 @@ class PurchaseController extends Controller
      */
     public function edit(Purchase $purchase)
     {
+        abort_if(Gate::denies('edit_purchases'), 403);
         $urlPost = route('purchase.edit.post', $purchase->id);
         // dd($purchase);
         return Inertia::render('Purchases/EditForm', ['urlPost' => $urlPost, 'data' => $purchase]);
@@ -85,6 +90,7 @@ class PurchaseController extends Controller
      */
     public function update(PurchaseRequest $request, Purchase $purchase)
     {
+        abort_if(Gate::denies('edit_purchases'), 403);
         $purchase->fill($request->only($purchase->getFillable()));
         if($purchase->isDirty()){
             $purchase->save();
@@ -111,6 +117,7 @@ class PurchaseController extends Controller
      */
     public function destroy(Purchase $purchase)
     {
+        abort_if(Gate::denies('delete_purchases'), 403);
         $purchase->purchaseDetails()->delete();
         $purchase->delete();
         // return redirect()->route('purchase.index');
