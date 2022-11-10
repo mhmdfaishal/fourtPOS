@@ -47,7 +47,7 @@ class PurchaseController extends Controller
         $purchase->fill($request->only($purchase->getFillable()));
         
         $purchase->user_id = auth()->user()->id;
-        $purchase->reference = 'PUR-'.date('YmdHis');
+        // $purchase->reference = 'PUR-'.date('YmdHis');
         $purchase->save();
         foreach($request->products as $product){
             $purchase->purchaseDetails()->create([

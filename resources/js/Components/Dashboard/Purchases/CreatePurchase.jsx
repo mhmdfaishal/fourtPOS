@@ -64,21 +64,21 @@ export default function CreatePurchase({close}) {
       post(route('purchase.create.store'), {
         data,
         onSuccess: () => {
+          setFormValues([{
+            product_name: "",
+            quantity : "",
+            price : ""
+          }])
+          setData({
+            date: "",
+            total_amount: 0,
+            note: "",
+            products: [],
+          })
           reset(),
           close()
         },
       });
-      setFormValues([{
-        product_name: "",
-        quantity : "",
-        price : ""
-      }])
-      setData({
-        date: "",
-        total_amount: 0,
-        note: "",
-        products: [],
-      })
     }
     return (
         <>

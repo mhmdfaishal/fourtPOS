@@ -10,6 +10,7 @@ class Purchase extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
     protected $fillable = [
         'date',
         'reference',
@@ -26,12 +27,14 @@ class Purchase extends Model
     protected $appends = ['user_name','purchase_details'];
     protected $with = ['purchaseDetails'];
 
-    // public static function boot () {
-    //     static::creating(function($model) {
-    //         $number = Purchase::max('id') + 1;
-    //         $model->reference = make_reference_id('purchase', $number);
-    //     });
-    // }
+    public static function boot () {
+        parent::boot();
+        
+        static::creating(function($model) {
+            $number = Purchase::max('id') + 1;
+            $model->reference = make_reference_id('PU', $number);
+        });
+    }
 
     public function purchaseDetails() {
         return $this->hasMany(PurchaseDetail::class, 'purchase_id', 'id');
