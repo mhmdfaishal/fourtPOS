@@ -102,15 +102,10 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-<<<<<<< HEAD
-    public function update(EditProductRequest $request, Product $product)
-    {;
-=======
     public function update(ProductRequest $request, Product $product)
     {
         abort_if(Gate::denies('edit_products'), 403);
 
->>>>>>> origin
         $product->fill($request->only($product->getFillable()));
         if($product->isDirty()) $product->save();
 
