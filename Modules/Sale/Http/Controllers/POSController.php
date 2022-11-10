@@ -81,6 +81,8 @@ class POSController extends Controller
                 'quantity' => $item["quantity"],
                 'sub_total' => $item["quantity"] * $product->product_price,
             ]);
+            $product->product_quantity = $product->product_quantity - $item["quantity"];
+            $product->save();
         }
 
         $saleDetails = $sale->saleDetails()->get();

@@ -16,7 +16,8 @@ export default function DetailSales({close, model}) {
             payment_method: model.payment_method, 
             payment_status: model.payment_status, 
             notes: model.notes,
-            sale_detail : model.sale_details 
+            sale_detail : model.sale_details, 
+            sum_of_sub_total : model.sum_of_sub_total,
         });
 
     useEffect(() => {
@@ -32,7 +33,8 @@ export default function DetailSales({close, model}) {
           payment_method: model.payment_method, 
           payment_status: model.payment_status, 
           notes: model.notes, 
-          sale_detail : model.sale_details 
+          sale_detail : model.sale_details, 
+          sum_of_sub_total : model.sum_of_sub_total,
         });
     }, [model]);
     
@@ -63,7 +65,7 @@ export default function DetailSales({close, model}) {
                         </div>
                         <div className="form-group">
                             <label htmlFor="total_amount" className="col-form-label">Total Amount:</label>
-                            <input type="number" className="form-control" name='total_amount' value={data.total_amount} id="total_amount" disabled/>
+                            <input type="number" className="form-control" name='total_amount' value={data.sum_of_sub_total} id="total_amount" disabled/>
                         </div>
                         <table style={{overflowX: 'auto', width: '100%'}}>
                             <thead>
