@@ -44,4 +44,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('sales.pdf');
     //Sales
     Route::resource('sales', SaleController::class);
+    Route::post('sales/{id}/change-status', [SaleController::class, 'changeStatus'])->name('sales.changeStatus');
 });

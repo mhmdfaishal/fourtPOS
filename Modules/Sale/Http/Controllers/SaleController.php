@@ -28,17 +28,20 @@ class SaleController extends Controller
     {
         abort_if(Gate::denies('show_sales'), 403);
         // dd('test');
-        $user = User::where('id', auth()->user()->id)->first();
-        if ($user->hasRole('Super Admin')){
-            $getAllSales = SalesResource::collection(Sale::latest()->paginate(10));
-        } else {
-            $getAllSales = SalesResource::collection(Sale::whereHas('saleDetails', function($query) {
-                $query->where('user_id', auth()->user()->id);
-            })->latest()->paginate(10));
-        }
+        $getAllSales = SalesResource::collection(Sale::whereHas('saleDetails', function($query) {
+            $query->where('user_id', auth()->user()->id);
+        })->orderBy('status', 'ASC')->latest()->paginate(10));
 
         // dd($getAllSales);
         return Inertia::render('Sales/Index', ['sales' => $getAllSales]);
+    }
+
+    public function changeStatus($id) {
+        $sale = Sale::find($id);
+        // dd($sale);
+        $sale->status = 1;
+        $sale->save();
+        return redirect()->back();
     }
 
     /**

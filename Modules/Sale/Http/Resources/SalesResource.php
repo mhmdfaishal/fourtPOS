@@ -18,6 +18,7 @@ class SalesResource extends JsonResource
             'id' => $this->id,
             'date' => $this->date,
             'notes' => $this->notes,
+            'no_table' => $this->no_table,
             'user_id' => $this->user_id,
             'reference' => $this->reference,
             'tax_percentage' => $this->tax_percentage,
@@ -28,6 +29,7 @@ class SalesResource extends JsonResource
             'payment_status' => $this->payment_status,
             'user_name' => $this->user_name,
             'sale_details' => $this->sale_details,
+            'status' => $this->status,
             'sum_of_sub_total' => $this->sum_of_sub_total,
         ];
     }

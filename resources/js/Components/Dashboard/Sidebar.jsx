@@ -96,6 +96,16 @@ export default function Sidebar() {
                         </Link>
                     </li>
                     ) : ''}
+                    {auth.can.access_settings ? (
+                    <li className="nav-item">
+                    <Link className={`${route().current('tax') && 'active'} nav-link`} href={route('tax')}>
+                        <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i className="ni ni-collection text-brand text-sm opacity-10" />
+                        </div>
+                        <span className="nav-link-text ms-1 text-dark">Tax</span>
+                    </Link>
+                </li>
+                    ) : ''}
                     {auth.can.access_user_management ? (
                     <>
                     <li className="nav-item mt-3">

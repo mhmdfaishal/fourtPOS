@@ -96,7 +96,6 @@ class POSController extends Controller
             ->setOption('encoding', 'utf-8')
             ->save(storage_path('app/public/sale/invoices/').$sale->reference.'.pdf');
 
-
         return redirect()->route('list.merchant')->with('success', 'Payment Success');
     }
 

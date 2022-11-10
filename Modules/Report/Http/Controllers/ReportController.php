@@ -27,14 +27,18 @@ class ReportController extends Controller
         $user = User::where('id', auth()->user()->id)->first();
         if ($user->hasRole('Super Admin')){
             $purchase = PurchaseResource::collection(Purchase::with('purchaseDetails')->with('user')->paginate(10));
-            $sales = SalesResource::collection(Sale::with('saleDetails')->with('user')->paginate(10));
+            $sales = SalesResource::collection(Sale::paginate(10));
         } else {
             $purchase = PurchaseResource::collection(Purchase::with('purchaseDetails')->with('user')->where('user_id', auth()->user()->id)->paginate(10));
-            $sales = SalesResource::collection(Sale::with('saleDetails')->with('user')
-                        ->whereHas('saleDetails', function($query)
+            $sales = SalesResource::collection(Sale::whereHas('saleDetails', function($query)
+                        {
+                            $query->where('user_id', auth()->user()->id);
+                        })->get());
+            $saleReports = SalesResource::collection(Sale::whereHas('saleDetails', function($query)
                         {
                             $query->where('user_id', auth()->user()->id);
                         })->paginate(10));
+            
         }
         $totalIncome = $sales->sum('sum_of_sub_total');
         $totalExpense = $purchase->sum('total_amount');
@@ -50,7 +54,8 @@ class ReportController extends Controller
             'totalExpense' => $totalExpense, 
             'totalBenefit' => $totalBenefit, 
             'sales' => $sales,
-            'purchases' => $purchase
+            'purchases' => $purchase,
+            'saleReports' => $saleReports
             ]);
     }
 
@@ -89,8 +94,11 @@ class ReportController extends Controller
             $sales = SalesResource::collection(Sale::with('saleDetails')->with('user')->whereBetween('date',[$from,$to])->paginate(10));
         } else {
             $purchases = PurchaseResource::collection(Purchase::with('purchaseDetails')->with('user')->where('user_id', auth()->user()->id)->whereBetween('date',[$from,$to])->paginate(10));
-            $sales = SalesResource::collection(Sale::with('saleDetails')->with('user')
-                        ->whereHas('saleDetails', function($query)
+            $sales = SalesResource::collection(Sale::whereHas('saleDetails', function($query)
+                        {
+                            $query->where('user_id', auth()->user()->id);
+                        })->whereBetween('date',[$from,$to])->get());
+            $saleReports = SalesResource::collection(Sale::whereHas('saleDetails', function($query)
                         {
                             $query->where('user_id', auth()->user()->id);
                         })->whereBetween('date',[$from,$to])->paginate(10));
@@ -109,7 +117,8 @@ class ReportController extends Controller
             'totalExpense' => $totalExpense, 
             'totalBenefit' => $totalBenefit, 
             'sales' => $sales,
-            'purchases' => $purchases
+            'purchases' => $purchases,
+            'saleReports' => $saleReports
             ]);
     }
 

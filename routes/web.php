@@ -22,6 +22,8 @@ Route::middleware('auth')->group(function () {
     Route::get('profile', ProfileController::class)->name('profile');
 
     // Route::get('roles', [RoleController::class, 'index'])->name('roles.index');
+    Route::get('tax', [DashboardController::class, 'getTax'])->name('tax');
+    Route::post('tax', [DashboardController::class, 'updateTax'])->name('update.tax');
 });
 
 Route::middleware('guest')->group(function () {

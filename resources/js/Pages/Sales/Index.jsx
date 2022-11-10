@@ -18,6 +18,11 @@ export default function Index(props) {
         detailDialogHandler();
     }
 
+    const changeStatus = (sale) => {
+        console.log(sale);
+        Inertia.post(route('sales.changeStatus', sale.id));
+    }
+
     return (
         <>
             <div className="container-fluid py-4">
@@ -44,8 +49,9 @@ export default function Index(props) {
                                             <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-center">#</th>
                                             <th className="text-uppercase text-secondary text-xxs font-weight-bolder text-left opacity-7 ps-2">Date</th>
                                             <th className="text-uppercase text-secondary text-xxs font-weight-bolder text-left opacity-7 ps-2">Reference</th>
-                                            <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-left">Note</th>
+                                            <th className="text-uppercase text-secondary text-xxs font-weight-bolder text-left opacity-7 ps-2">No Table</th>
                                             <th className="text-uppercase text-secondary text-xxs font-weight-bolder text-left opacity-7 ps-2">Total Amount</th>
+                                            <th className="text-uppercase text-secondary text-xxs font-weight-bolder text-left opacity-7 ps-2">Status</th>
                                             <th className="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Actions</th>
                                         </tr>
                                     </thead>
@@ -57,18 +63,28 @@ export default function Index(props) {
                                                     <span className="text-xs font-weight-bold">{sale.date}</span>
                                                 </td>
                                                 <td className='text-left'>
-                                                <td className='text-left'>
                                                     <span className="text-xs font-weight-bold">{sale.reference}</span>
                                                 </td>
-                                                </td>
                                                 <td className='text-left'>
-                                                    <span className="text-xs font-weight-bold">{sale.notes}</span>
+                                                    <span className="text-xs font-weight-bold">{sale.no_table}</span>
                                                 </td>
                                                 <td className='text-left'>
                                                     <span className="text-xs font-weight-bold">{sale.sum_of_sub_total}</span>
                                                 </td>
+                                                <td className='text-left'>
+                                                    {sale.status == 1 ? (
+                                                        <span className="text-xs font-weight-bold text-green">✅</span>
+                                                    ) : (
+                                                        <span className="text-xs font-weight-bold text-red">❌</span>
+                                                    )}
+                                                </td>
                                                 <td className="align-middle text-center" width="5%">
                                                 <div>
+                                                    {sale.status == 1 ? '' : (
+                                                    <button type="button" onClick={() => changeStatus(sale)} className="btn btn-slack btn-icon-only mx-2">
+                                                        <span className="btn-inner--icon"><i className="fas fa-check"></i></span>
+                                                    </button>
+                                                    )}
                                                     <button type="button" onClick={() => openDetailDialog(sale)} className="btn btn-youtube btn-icon-only">
                                                         <span className="btn-inner--icon"><i className="fas fa-info-circle"></i></span>
                                                     </button> 

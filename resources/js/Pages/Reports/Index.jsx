@@ -9,7 +9,8 @@ import { Inertia } from '@inertiajs/inertia';
 import { convertToIDR } from "../../Utils/helper";
 
 export default function Index(props) {
-    const {data: sales,  links: linksSales,  meta: metaSales} = props.sales;  
+    const {data: sales} = props.sales;  
+    const {data: saleReports,  links: linksSales,  meta: metaSales} = props.saleReports;  
     const {data: purchases, links: linksPurchases, meta: metaPurchases} = props.purchases;
     const {totalBenefit: totalBenefit} = props; 
     const {totalIncome: totalIncome} = props;
@@ -156,7 +157,7 @@ export default function Index(props) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {sales.length > 0 ? (sales.map((sale, index) => (
+                                        {saleReports.length > 0 ? (saleReports.map((sale, index) => (
                                             <tr key={index}>
                                                 <td className="align-middle text-center text-sm">
                                                     <span className="text-secondary text-xs font-weight-bold">{index + 1}</span>

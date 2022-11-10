@@ -12,6 +12,9 @@ use App\Http\Resources\TotalCategoryResources;
 use App\Http\Resources\TotalSaleResources;
 use App\Http\Resources\TotalPurchasesResources;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
+
+
 class DashboardController extends Controller
 {
     /**
@@ -46,5 +49,36 @@ class DashboardController extends Controller
                 'outcome'   => $outcome,
             ]
         );
+    }
+
+    public function getTax(){
+        $tax = env("TAX_PERCENTAGE");
+
+        return inertia('Tax',[
+            'tax' => $tax,
+        ]);
+    }
+
+    public function updateTax(Request $request) {
+        abort_if(Gate::denies('access_settings'), 403);
+
+        $toReplace = array(
+            'TAX_PERCENTAGE='.env('TAX_PERCENTAGE').'',
+            
+        );
+
+        $replaceWith = array(
+            'TAX_PERCENTAGE='.$request->tax.'',
+        );
+        
+        try {
+            file_put_contents(base_path('.env'), str_replace($toReplace, $replaceWith, file_get_contents(base_path('.env'))));
+
+        } catch (\Exception $exception) {
+            Log::error($exception);
+            session()->flash('settings_admin', 'Something Went Wrong!');
+        }
+
+        return redirect()->route('tax')->with('success', 'Tax updated successfully.');
     }
 }
