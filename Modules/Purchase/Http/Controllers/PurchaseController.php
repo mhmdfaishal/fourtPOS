@@ -2,6 +2,7 @@
 
 namespace Modules\Purchase\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -9,6 +10,7 @@ use Modules\Purchase\Entities\Purchase;
 use Inertia\Inertia;
 use Modules\Purchase\Http\Requests\PurchaseRequest;
 use Illuminate\Support\Facades\Gate;
+use Modules\Report\Http\Resources\PurchaseResource;
 
 class PurchaseController extends Controller
 {
@@ -19,8 +21,9 @@ class PurchaseController extends Controller
     public function index()
     {
         abort_if(Gate::denies('show_purchases'), 403);
-        $data = Purchase::with('purchaseDetails')->where('user_id', auth()->user()->id)->get();
-        return Inertia::render('Purchases/Index', ['data' => $data]);
+        $data = PurchaseResource::collection(Purchase::with('purchaseDetails')->where('user_id', auth()->user()->id)->latest()->paginate(10));
+
+        return Inertia::render('Purchase/Index', ['purchases' => $data]);
     }
 
     /**
@@ -29,9 +32,7 @@ class PurchaseController extends Controller
      */
     public function create()
     {
-        abort_if(Gate::denies('create_purchases'), 403);
-        $urlPost = route('purchase.create.store');
-        return Inertia::render('Purchases/AddForm', ['urlPost' => $urlPost]);
+        //
     }
 
     /**
@@ -39,13 +40,14 @@ class PurchaseController extends Controller
      * @param Request $request
      * @return Renderable
      */
-    public function store(Request $request, Purchase $purchase)
+    public function store(PurchaseRequest $request, Purchase $purchase)
     {
         abort_if(Gate::denies('create_purchases'), 403);
         // dd($request->all());
         $purchase->fill($request->only($purchase->getFillable()));
+        
         $purchase->user_id = auth()->user()->id;
-        $purchase->reference = 'PUR-'.date('YmdHis');
+        // $purchase->reference = 'PUR-'.date('YmdHis');
         $purchase->save();
         foreach($request->products as $product){
             $purchase->purchaseDetails()->create([
@@ -120,6 +122,6 @@ class PurchaseController extends Controller
         abort_if(Gate::denies('delete_purchases'), 403);
         $purchase->purchaseDetails()->delete();
         $purchase->delete();
-        // return redirect()->route('purchase.index');
+        return redirect()->route('purchase.index');
     }
 }

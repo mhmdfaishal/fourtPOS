@@ -15,14 +15,8 @@ class PurchaseRequest extends FormRequest
     {
         return [
             "date" => "required|date",
-            "discount_percentage" => "required|numeric",
-            "discount_amount" => "required|numeric",
             "total_amount" =>  "required|numeric",
-            "paid_amount" => "required|numeric",
-            "payment_method" => "required|string",
-            "payment_status" => "required|string",
             "note" => "nullable|string",
-            "status" => "required|string",
             "products" => "required|array"
         ];
     }

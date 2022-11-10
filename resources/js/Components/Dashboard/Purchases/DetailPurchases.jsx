@@ -10,9 +10,6 @@ export default function DetailPurchases({close, model}) {
             date: model.date, 
             user: model.user_name,  
             total_amount: model.total_amount, 
-            paid_amount: model.paid_amount, 
-            payment_method: model.payment_method, 
-            payment_status: model.payment_status, 
             notes: model.notes,
             purchase_detail : model.purchase_details 
         });
@@ -24,9 +21,6 @@ export default function DetailPurchases({close, model}) {
           date: model.date,
           user: model.user_name,  
           total_amount: model.total_amount, 
-          paid_amount: model.paid_amount, 
-          payment_method: model.payment_method, 
-          payment_status: model.payment_status, 
           notes: model.notes, 
           purchase_detail : model.purchase_details 
         });
@@ -52,18 +46,6 @@ export default function DetailPurchases({close, model}) {
                         <div className="form-group">
                             <label htmlFor="total_amount" className="col-form-label">Total Amount:</label>
                             <input type="number" className="form-control" name='total_amount' value={data.total_amount} id="total_amount" disabled/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="paid_amount" className="col-form-label">Paid Amount:</label>
-                            <input type="number" className="form-control" name='paid_amount' value={data.paid_amount} id="paid_amount" disabled/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="payment_method" className="col-form-label">Payment Method:</label>
-                            <input type="text" className="form-control" name='payment_method' value={data.payment_method} id="payment_method" disabled/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="payment_status" className="col-form-label">Payment Status:</label>
-                            <input type="text" className="form-control" name='payment_status' value={data.payment_status} id="payment_status" disabled/>
                         </div>
                         <div className="form-group">
                             <label htmlFor="notes" className="col-form-label">Notes:</label>
