@@ -16,6 +16,7 @@ use Modules\Sale\Http\Requests\StoreSaleRequest;
 use Modules\Sale\Http\Requests\UpdateSaleRequest;
 use Inertia\Inertia;
 use Modules\Sale\Http\Resources\SalesResource;
+use Illuminate\Support\Facades\Gate;
 
 class SaleController extends Controller
 {
@@ -25,7 +26,7 @@ class SaleController extends Controller
      */
     public function index()
     {
-        // abort_if(Gate::denies('access_sales'), 403);
+        abort_if(Gate::denies('show_sales'), 403);
         // dd('test');
         $user = User::where('id', auth()->user()->id)->first();
         if ($user->hasRole('Super Admin')){
@@ -35,6 +36,8 @@ class SaleController extends Controller
                 $query->where('user_id', auth()->user()->id);
             })->latest()->paginate(10));
         }
+
+        // dd($getAllSales);
         return Inertia::render('Sales/Index', ['sales' => $getAllSales]);
     }
 
@@ -118,47 +121,12 @@ class SaleController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function show($id)
-    {
-        // abort_if(Gate::denies('show_sales'), 403);
-
-        $getSaleById = Sale::findOrFail($id);
-
-        // return Inertia::render('Sales/Show', ['data' => $getSaleById]);
-    }
 
     /**
      * Show the form for editing the specified resource.
      * @param int $id
      * @return Renderable
      */
-    public function edit(Sale $sale)
-    {
-        // abort_if(Gate::denies('edit_sales'), 403);
-
-        $sale_details = $sale->saleDetails;
-
-        Cart::instance('sale')->destroy();
-
-        $cart = Cart::instance('sale');
-        foreach ($sale_details as $sale_detail) {
-
-            $cart->add([
-                'id'      => $sale_detail->product_id,
-                'name'    => $sale_detail->product_name,
-                'qty'     => $sale_detail->quantity,
-                'price'   => $sale_detail->price,
-                'weight'  => 1,
-                'options' => [
-                    'sub_total'   => $sale_detail->sub_total,
-                    'code'        => $sale_detail->product_code,
-                    'stocks'      => $sale_detail->product->product_quantity,
-                ]
-            ]);
-        }
-
-        // return Inertia::render('Sales/Edit', ['data' => $sale]);
-    }
 
     /**
      * Update the specified resource in storage.
@@ -166,81 +134,10 @@ class SaleController extends Controller
      * @param int $id
      * @return Renderable
      */
-    public function update(UpdateSaleRequest $request, Sale $sale)
-    {
-        DB::transaction(function () use ($request, $sale) {
-
-            $due_amount = $request->total_amount - $request->paid_amount;
-
-            if ($due_amount == $request->total_amount) {
-                $payment_status = 'Unpaid';
-            } elseif ($due_amount > 0) {
-                $payment_status = 'Partial';
-            } else {
-                $payment_status = 'Paid';
-            }
-
-            foreach ($sale->saleDetails as $sale_detail) {
-                if ($sale->status == 'Shipped' || $sale->status == 'Completed') {
-                    $product = Product::findOrFail($sale_detail->product_id);
-                    $product->update([
-                        'product_quantity' => $product->product_quantity + $sale_detail->quantity
-                    ]);
-                }
-                $sale_detail->delete();
-            }
-
-            $sale->update([
-
-                'reference' => $request->reference,
-                'date' => $request->date,
-                'user_id' => auth()->user()->id,
-                'tax_percentage' => $request->tax_percentage,
-                // 'tax_amount' => Cart::instance('sale')->tax() * 100,
-                'total_amount' => $request->total_amount * 100,
-                'paid_amount' => $request->paid_amount * 100,
-                'payment_method' => $request->payment_method,
-                'payment_status' => $payment_status,
-            ]);
-
-            foreach (Cart::instance('sale')->content() as $cart_item) {
-                $product = Product::findOrFail($cart_item->id);
-
-                SaleDetails::create([
-                    'sale_id' => $sale->id,
-                    'product_id' => $cart_item->id,
-                    'product_name' => $cart_item->name,
-                    'product_code' => $cart_item->options->code,
-                    'price' => $cart_item->price * 100,
-                    'quantity' => $cart_item->qty,
-                    'sub_total' => $cart_item->options->sub_total * 100,
-                ]);
-
-                if ($request->status == 'Shipped' || $request->status == 'Completed') {
-                    $product = Product::findOrFail($cart_item->id);
-                    $product->update([
-                        'product_quantity' => $product->product_quantity - $cart_item->qty
-                    ]);
-                }
-            }
-
-            Cart::instance('sale')->destroy();
-        });
-
-        return redirect()->route('sales.index');
-    }
 
     /**
      * Remove the specified resource from storage.
      * @param int $id
      * @return Renderable
      */
-    public function destroy(Sale $sale)
-    {
-        // abort_if(Gate::denies('delete_sales'), 403);
-
-        $sale->delete();
-
-        return redirect()->route('sales.index');
-    }
 }

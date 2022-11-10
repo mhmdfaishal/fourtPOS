@@ -73,6 +73,7 @@ export default function Index(props) {
                                         <tr>
                                             <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 text-centter">#</th>
                                             <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-left">Name</th>
+                                            <th className="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2 text-left">Merchant Name</th>
                                             <th className="text-uppercase text-secondary text-xxs font-weight-bolder text-left opacity-7 ps-2">Email</th>
                                             <th className="text-uppercase text-secondary text-xxs font-weight-bolder text-left opacity-7 ps-2">Role</th>
                                             <th className="text-uppercase text-secondary text-xxs font-weight-bolder text-left opacity-7 ps-2">Is Active</th>
@@ -92,6 +93,9 @@ export default function Index(props) {
                                                             <h6 className="mb-0 text-sm">{user.name}</h6>
                                                         </div>
                                                     </div>
+                                                </td>
+                                                <td className='text-left'>
+                                                    <span className="text-xs font-weight-bold">{user.merchant_name ? user.merchant_name : '-'}</span>
                                                 </td>
                                                 <td className='text-left'>
                                                     <span className="text-xs font-weight-bold">{user.email}</span>
@@ -134,7 +138,7 @@ export default function Index(props) {
                     <ul className="pagination justify-content-center">
                         { meta.links.map((link, k) => (
                             <li key={k} className="page-item">
-                                <Link disabled={link.url == null ? true : false} as="button" className={`${link.active && 'bg-info'} ${link.url == null && 'btn bg-gradient-secondary text-white'} page-link`} href={link.url || ''} dangerouslySetInnerHTML={{ __html: link.label }}/>
+                                <Link disabled={link.url == null ? true : false} as="button" className={`${link.active && 'bg-info text-white'} ${link.url == null && 'btn bg-gradient-secondary text-white'} page-link`} href={link.url || ''} dangerouslySetInnerHTML={{ __html: link.label }}/>
                             </li>
                         ))}
                     </ul>

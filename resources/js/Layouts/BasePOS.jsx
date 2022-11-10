@@ -14,7 +14,11 @@ export default function BasePOS({children, title}) {
     return (
         <div className="g-sidenav-show bg-gray-100">
             <div className="min-height-2000 bg-gray-400 position-absolute w-100"></div>
-                <Head title={ title } />
+                <Head>
+                    <title>{ title }</title>
+                    <meta head-key="description" name="description" content="This is the default description" />
+                    <link rel="icon" type="image/png" href="/img/markLogo.png" />
+                </Head>
                 <SidebarLeft />
                 <SidebarRight />
                 <main className="main-content position-relative border-radius-lg d-flex flex-column min-vh-100 ">

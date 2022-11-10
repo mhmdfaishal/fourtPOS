@@ -11,12 +11,14 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
 
     public function index()
     {
+        abort_if(Gate::denies('access_user_management'), 403);
         $users = UserResource::collection(User::with('roles')->latest()->paginate(10));
 
         $roles = RolesResource::collection(Role::where('name', '!=', 'Super Admin')->orderBy('created_at', 'asc')->get());
@@ -29,6 +31,7 @@ class UserController extends Controller
 
     public function store(UserRequest $request)
     {
+        abort_if(Gate::denies('access_user_management'), 403);
         $form_data = array(
             'name'     => $request->name,
             'email'    => $request->email,
@@ -80,6 +83,7 @@ class UserController extends Controller
 
     public function update(UserUpdateRequest $request, User $user)
     {
+        abort_if(Gate::denies('access_user_management'), 403);
         $form_data = array(
             'name'     => $request->name,
             'email'    => $request->email,
@@ -98,6 +102,7 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        abort_if(Gate::denies('access_user_management'), 403);
         $user->delete();
 
         return back()->with([

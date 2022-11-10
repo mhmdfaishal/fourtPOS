@@ -6,3 +6,24 @@ if (!function_exists('make_reference_id')) {
         return $padded_text;
     }
 }
+
+if (!function_exists('format_currency')) {
+    function format_currency($value, $format = true) {
+        if (!$format) {
+            return $value;
+        }
+
+        $position = "prefix";
+        $symbol = "Rp";
+        $decimal_separator = ",";
+        $thousand_separator = ".";
+
+        if ($position == 'prefix') {
+            $formatted_value = $symbol . number_format((float) $value, 2, $decimal_separator, $thousand_separator);
+        } else {
+            $formatted_value = number_format((float) $value, 2, $decimal_separator, $thousand_separator) . $symbol;
+        }
+
+        return $formatted_value;
+    }
+}

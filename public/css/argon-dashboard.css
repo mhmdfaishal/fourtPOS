@@ -8649,6 +8649,10 @@ fieldset:disabled .btn {
   height: 100vh !important;
 }
 
+.vh-18 {
+  height: 18vh !important;
+}
+
 .min-vh-25 {
   min-height: 25vh !important;
 }
@@ -10254,6 +10258,10 @@ fieldset:disabled .btn {
   color: #fff !important;
 }
 
+.text-brand {
+  color: rgba(245, 115, 40, 0.8) !important;
+}
+
 .text-body {
   color: #67748e !important;
 }
@@ -10797,6 +10805,10 @@ fieldset:disabled .btn {
 }
 .min-height-2000 {
   min-height: 2000px !important;
+}
+
+.min-height-vh-100 {
+  min-height: 100vh !important;
 }
 
 .height-100 {
@@ -21339,12 +21351,12 @@ fieldset:disabled .btn {
 }
 
 .form-switch .form-check-input:checked {
-  border-color: #d7ae8e;
-  background-color: #d7ae8e;
+  border-color: #fff;
+  background-color: #F57328;
 }
 
 .form-switch-role .form-check-input:checked {
-  border-color: #f57328 !important;
+  border-color: #fff !important;
   background-color: #f57328 !important;
 }
 
@@ -26845,4 +26857,43 @@ input[type="search"] {
 
 .card-price{
   color: #238700;
+}
+
+.fs-catatan{
+  font-size: small !important;
+}
+
+.detail-price-summary{
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #dbdbdb;
+  border-radius: 0.5rem;
+}
+
+.detail-price-summary h2 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.card-product {
+  min-height: 33rem;
+}
+
+.zero-quantity{
+  background-color: #84848354 !important;
+}
+.zero-quantity-img{
+  opacity: 0.5;
+}
+
+.btn-disabled {
+  background-color: #84848354 !important;
+  box-shadow: #84848354 !important;
+}
+
+.login-page{
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  background-position: center !important;
 }

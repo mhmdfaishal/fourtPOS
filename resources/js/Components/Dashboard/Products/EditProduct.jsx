@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 
 export default function EditProduct({close, model, categories}) {
 
-    const {data, setData, put, reset, errors, progress} = useForm(
+    const {data, setData, post, reset, errors, progress} = useForm(
         { 
             id : model.id,
             product_name: model.product_name, 
@@ -26,7 +26,8 @@ export default function EditProduct({close, model, categories}) {
    
     const onSubmit = (e) => {
         e.preventDefault();
-        put(route('product.edit.post', model.id), {
+        console.log(data);
+        post(route('product.edit.post', model.id), {
             data, 
             onSuccess: () => {
                 reset(),
@@ -107,8 +108,10 @@ export default function EditProduct({close, model, categories}) {
                             {errors && <div className='text-danger mt-1'>{errors.product_stock_alert}</div>}
                         </div>
                         <div className="form-group">
-                            <label htmlFor="image" className="col-form-label">Product Image:</label>
-                            <img src={data.thumb} alt="productImage" className="img-thumbnail " />
+                            <div className="d-flex flex-column">
+                                <label htmlFor="image" className="col-form-label">Product Image:</label>
+                                <img src={data.thumb} alt="productImage" className="img-thumbnail " />
+                            </div>
                         </div>
                         <div className="form-group">
                             <input type="file" className="form-control" name='image' onChange={(e)=> setData('image',e.target.files[0] )} id="image" accept='image/*'/>

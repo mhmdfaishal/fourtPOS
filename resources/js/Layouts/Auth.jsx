@@ -11,7 +11,11 @@ export default function Auth({children, title}) {
     
     return (
         <main className="main-content  mt-0">
-            <Head title={ title } />
+            <Head>
+                <title>{ title }</title>
+                <meta head-key="description" name="description" content="This is the default description" />
+                <link rel="icon" type="image/png" href="/img/markLogo.png" />
+            </Head>
 
             <section>            
                 <Toaster position='top-center' duration='4000'/>

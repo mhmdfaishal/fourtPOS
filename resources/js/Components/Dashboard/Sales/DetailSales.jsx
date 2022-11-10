@@ -65,22 +65,6 @@ export default function DetailSales({close, model}) {
                             <label htmlFor="total_amount" className="col-form-label">Total Amount:</label>
                             <input type="number" className="form-control" name='total_amount' value={data.total_amount} id="total_amount" disabled/>
                         </div>
-                        <div className="form-group">
-                            <label htmlFor="paid_amount" className="col-form-label">Paid Amount:</label>
-                            <input type="number" className="form-control" name='paid_amount' value={data.paid_amount} id="paid_amount" disabled/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="payment_method" className="col-form-label">Payment Method:</label>
-                            <input type="text" className="form-control" name='payment_method' value={data.payment_method} id="payment_method" disabled/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="payment_status" className="col-form-label">Payment Status:</label>
-                            <input type="text" className="form-control" name='payment_status' value={data.payment_status} id="payment_status" disabled/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="notes" className="col-form-label">Notes:</label>
-                            <textarea className="form-control" name='notes' value={data.notes} id="notes" disabled></textarea>
-                        </div>
                         <table style={{overflowX: 'auto', width: '100%'}}>
                             <thead>
                                 <tr>
