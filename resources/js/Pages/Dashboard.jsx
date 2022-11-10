@@ -198,7 +198,7 @@ export default function Dashboard(props) {
                 <div className="row">
                     <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
                     <div className="card">
-                        <div className="card-body p-3">
+                        <div className="card-body p-3 vh-18">
                         <div className="row">
                             <div className="col-8">
                             <div className="numbers">
@@ -210,7 +210,7 @@ export default function Dashboard(props) {
                             </div>
                             <div className="col-4 text-end">
                             <div className="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-                                <i className="ni ni-money-coins text-lg opacity-10" aria-hidden="true" />
+                                <i className="ni ni-app text-lg opacity-10" aria-hidden="true" />
                             </div>
                             </div>
                         </div>
@@ -219,7 +219,7 @@ export default function Dashboard(props) {
                     </div>
                     <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
                     <div className="card">
-                        <div className="card-body p-3">
+                        <div className="card-body p-3 vh-18">
                         <div className="row">
                             <div className="col-8">
                             <div className="numbers">
@@ -231,7 +231,7 @@ export default function Dashboard(props) {
                             </div>
                             <div className="col-4 text-end">
                             <div className="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
-                                <i className="ni ni-world text-lg opacity-10" aria-hidden="true" />
+                                <i className="ni ni-tag text-lg opacity-10" aria-hidden="true" />
                             </div>
                             </div>
                         </div>
@@ -240,7 +240,7 @@ export default function Dashboard(props) {
                     </div>
                     <div className="col-xl-3 col-sm-6 mb-xl-0 mb-4">
                     <div className="card">
-                        <div className="card-body p-3">
+                        <div className="card-body p-3 vh-18">
                         <div className="row">
                             <div className="col-8">
                             <div className="numbers">
@@ -252,7 +252,7 @@ export default function Dashboard(props) {
                             </div>
                             <div className="col-4 text-end">
                             <div className="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
-                                <i className="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true" />
+                                <i className="ni ni-money-coins text-lg opacity-10" aria-hidden="true" />
                             </div>
                             </div>
                         </div>
@@ -261,7 +261,7 @@ export default function Dashboard(props) {
                     </div>
                     <div className="col-xl-3 col-sm-6">
                     <div className="card">
-                        <div className="card-body p-3">
+                        <div className="card-body p-3 vh-18">
                         <div className="row">
                             <div className="col-8">
                             <div className="numbers">

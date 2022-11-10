@@ -22,9 +22,9 @@ export default function Sidebar() {
                     <li className="nav-item">
                         <Link className={`${route().current('dashboard') && 'active'} nav-link`} href={route('dashboard')}>
                             <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i className="ni ni-tv-2 text-primary text-sm opacity-10" />
+                                <i className="ni ni-tv-2 text-brand text-sm opacity-10" />
                             </div>
-                            <span className="nav-link-text ms-1 text-warning">Dashboard</span>
+                            <span className="nav-link-text ms-1 text-dark">Dashboard</span>
                         </Link>
                     </li>
                     ) : ''}                    
@@ -35,9 +35,9 @@ export default function Sidebar() {
                     <li className="nav-item">
                         <Link className={`${route().current('product.*') && 'active'} nav-link`} href={route('product.index')}>
                             <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i className="ni ni-box-2 text-info text-sm opacity-10" />
+                                <i className="ni ni-box-2 text-brand text-sm opacity-10" />
                             </div>
-                            <span className="nav-link-text ms-1 text-warning">Products</span>
+                            <span className="nav-link-text ms-1 text-dark">Products</span>
                         </Link>
                     </li>
                     ) : ''}  
@@ -45,9 +45,9 @@ export default function Sidebar() {
                     <li className="nav-item">
                         <Link className={`${route().current('category.*') && 'active'} nav-link`} href={route('category.index')}>
                             <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i className="ni ni-tag text-dark text-sm opacity-10" />
+                                <i className="ni ni-tag text-brand text-sm opacity-10" />
                             </div>
-                            <span className="nav-link-text ms-1 text-warning">Categories</span>
+                            <span className="nav-link-text ms-1 text-dark">Categories</span>
                         </Link>
                     </li>
                     ) : ''}
@@ -55,9 +55,9 @@ export default function Sidebar() {
                     <li className="nav-item">
                         <Link className={`${route().current('purchase.*') && 'active'} nav-link`} href={route('purchase.index')}>
                             <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i className="ni ni-money-coins text-success text-sm opacity-10" />
+                                <i className="ni ni-money-coins text-brand text-sm opacity-10" />
                             </div>
-                            <span className="nav-link-text ms-1 text-warning">Purchases</span>
+                            <span className="nav-link-text ms-1 text-dark">Purchases</span>
                         </Link>
                     </li>
                     ) : ''}
@@ -65,9 +65,9 @@ export default function Sidebar() {
                     <li className="nav-item">
                         <Link className={`${route().current('sales.*') && 'active'} nav-link`} href={route('sales.index')}>
                             <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i className="ni ni-cart text-secondary text-sm opacity-10" />
+                                <i className="ni ni-cart text-brand text-sm opacity-10" />
                             </div>
-                            <span className="nav-link-text ms-1 text-warning">Sales</span>
+                            <span className="nav-link-text ms-1 text-dark">Sales</span>
                         </Link>
                     </li>
                     ) : ''}
@@ -75,9 +75,9 @@ export default function Sidebar() {
                     <li className="nav-item">
                         <Link className={`${route().current('reports.*') && 'active'} nav-link`} href={route('reports.index')}>
                             <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i className="ni ni-cart text-secondary text-sm opacity-10" />
+                                <i className="ni ni-cart text-brand text-sm opacity-10" />
                             </div>
-                            <span className="nav-link-text ms-1 text-warning">Reports</span>
+                            <span className="nav-link-text ms-1 text-dark">Reports</span>
                         </Link>
                     </li>
                     ) : ''}
@@ -90,9 +90,9 @@ export default function Sidebar() {
                     <li className="nav-item">
                         <Link className={`${route().current('profile') && 'active'} nav-link`} href={route('profile')}>
                             <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i className="ni ni-single-02 text-muted text-sm opacity-10" />
+                                <i className="ni ni-single-02 text-brand text-sm opacity-10" />
                             </div>
-                            <span className="nav-link-text ms-1 text-warning">Profile</span>
+                            <span className="nav-link-text ms-1 text-dark">Profile</span>
                         </Link>
                     </li>
                     ) : ''}
@@ -104,17 +104,17 @@ export default function Sidebar() {
                     <li className="nav-item">
                         <Link className={`${route().current('users.*') && 'active'} nav-link`} href={route('users.index')}>
                             <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i className="fas fa-user-lock text-reset text-sm opacity-10" />
+                                <i className="fas fa-user-lock text-brand text-sm opacity-10" />
                             </div>
-                            <span className="nav-link-text ms-1 text-warning">Users</span>
+                            <span className="nav-link-text ms-1 text-dark">Users</span>
                         </Link>
                     </li>
                     <li className="nav-item">
                         <Link className={`${route().current('roles.*') && 'active'} nav-link`} href={route('roles.index')}>
                             <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i className="fas fa-user-lock text-reset text-sm opacity-10" />
+                                <i className="fas fa-user-lock text-brand text-sm opacity-10" />
                             </div>
-                            <span className="nav-link-text ms-1 text-warning">Roles</span>
+                            <span className="nav-link-text ms-1 text-dark">Roles</span>
                         </Link>
                     </li>
                     </>
@@ -122,9 +122,9 @@ export default function Sidebar() {
                     <li className="nav-item">
                         <Link className="nav-link " as='a' method='post' href={route('logout')}>
                             <div className="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i className="fas fa-sign-out-alt text-danger text-sm opacity-10"></i>
+                            <i className="fas fa-sign-out-alt text-brand text-sm opacity-10"></i>
                             </div>
-                            <span className="nav-link-text ms-1 text-danger">Log out</span>
+                            <span className="nav-link-text ms-1 text-dark">Log out</span>
                         </Link>
                     </li>
                 </ul>
