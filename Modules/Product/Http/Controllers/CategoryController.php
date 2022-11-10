@@ -19,7 +19,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        // abort_if(Gate::denies('access_product_categories'), 403);
+        abort_if(Gate::denies('show_product_categories'), 403);
         $categories = CategoryResource::collection(Category::where('user_id', auth()->user()->id)->get());
         return Inertia::render('Category/Index', ['categories' => $categories]);
     }
@@ -31,7 +31,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        // abort_if(Gate::denies('access_product_categories'), 403);
+        abort_if(Gate::denies('create_product_categories'), 403);
 
         return Inertia::render('Category/AddForm', ['urlPost' => route('category.create.store')]);
     }
@@ -44,7 +44,7 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request, Category $category)
     {
-        // abort_if(Gate::denies('access_product_categories'), 403);
+        abort_if(Gate::denies('create_product_categories'), 403);
 
         $category->fill($request->only($category->getFillable()));
         $category->user_id = auth()->user()->id;
@@ -75,7 +75,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        // abort_if(Gate::denies('access_product_categories'), 403);
+        abort_if(Gate::denies('edit_product_categories'), 403);
 
         return Inertia::render('Category/EditForm', ['data' => $category, 'urlPost' => route('category.edit.post', $category)]);
     }
@@ -89,7 +89,8 @@ class CategoryController extends Controller
      */
     public function update(Category $category, CategoryRequest $request)
     {
-        // abort_if(Gate::denies('access_product_categories'), 403);
+        abort_if(Gate::denies('edit_product_categories'), 403);
+        
         $category->fill($request->only($category->getFillable()));
         if($category->isDirty()) $category->save();
         return redirect()->route('category.index');
@@ -104,7 +105,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        // abort_if(Gate::denies('access_product_categories'), 403);
+        abort_if(Gate::denies('delete_product_categories'), 403);
 
         $category->delete();
         return redirect()->route('category.index');

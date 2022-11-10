@@ -20,6 +20,7 @@ export default function ShowMerchant(props) {
             cart = [];
             cart.push({ ...product, quantity: 1 });
             localStorage.setItem('cart', JSON.stringify(cart));
+            window.location.reload();
         }
         if (cart != null) {
             // check if product already exists in cart
@@ -33,10 +34,12 @@ export default function ShowMerchant(props) {
             // if product exist in cart, add new quantity to local storage
             if(productExists) {
                 localStorage.setItem('cart', JSON.stringify(cart));
+                window.location.reload();
             }
             if (!productExists) {
                 cart.push({ ...product, quantity: 1 });
                 localStorage.setItem('cart', JSON.stringify(cart));
+                window.location.reload();
             }
         }
 
@@ -56,17 +59,29 @@ export default function ShowMerchant(props) {
                 </div>
                 <div className="row row-cols-3 gx-4" id="grid-system">
                     {products ? products.map((product,index) => (
-                    <div className="col">
-                        <div className="card text-center mb-3">
-                            <img src={product.image} className="card-img-top px-3 pt-3" />
-                            <div className="card-body">
-                                <h5 className="card-title text-start">{product.product_name}</h5>
-                                <p className="card-text text-start fs-6">{product.product_note}</p>
-                                <h6 className="card-price">{convertToIDR(product.product_price)} / serve</h6>
-                                <a onClick={(e) => addToCart(product)} class="btn btn-teal-orange mb-0 text-white">+ Keranjang</a>
+                        product.product_quantity != 0 ? 
+                            <div className="col">
+                                <div className="card card-product text-center mb-3">
+                                    <img src={product.image} className="card-img-top px-3 pt-3" />
+                                    <div className="card-body">
+                                        <h5 className="card-title text-start">{product.product_name}</h5>
+                                        <p className="card-text text-start fs-6">{product.product_note}</p>
+                                        <h6 className="card-price">{convertToIDR(product.product_price)} / serve</h6>
+                                        <a onClick={(e) => addToCart(product)} class="btn btn-teal-orange mb-0 text-white">+ Keranjang</a>
+                                    </div>
+                                </div>
+                            </div>
+                         : 
+                         <div className="col">
+                            <div className="card card-product text-center mb-3 zero-quantity">
+                                <img src={product.image} className="card-img-top px-3 pt-3 zero-quantity-img" />
+                                <div className="card-body">
+                                    <h5 className="card-title text-start">{product.product_name}</h5>
+                                    <p className="card-text text-start fs-6">{product.product_note}</p>
+                                    <h6 className="card-price">{convertToIDR(product.product_price)} / serve</h6>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     )) : 
                         // Set no product
                         <div className="col text-center">

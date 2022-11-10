@@ -1,17 +1,21 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useCallback } from 'react'
 import { convertToIDR } from "../../Utils/helper";
-import { Inertia } from '@inertiajs/inertia';
-import SummaryPurchases from '../../Components/Dashboard/Purchases/SummaryPurchases';
+import { usePage } from '@inertiajs/inertia-react'
+import SummaryPurchases from '../../Components/Cashier/SummaryPurchases';
 import Dialog from '../../Components/Dashboard/Dialog';
 import useDialog from '../../Hooks/useDialog';
 
 export default function SidebarRight() {
-
+    const { TAX_PERCENTAGE } = usePage().props;
+    
     const [isOpen, setIsOpen] = React.useState(true);
     const [subTotal, setSubTotal] = React.useState(0);
     const [tax, setTax] = React.useState(0);
     const [totalBill, setTotalBill] = React.useState(0);
-    const [cart, setCart] = React.useState([]);
+    const [cart, setCart] = React.useState(() => {
+        const localData = localStorage.getItem('cart');
+        return localData ? JSON.parse(localData) : [];
+    });
     const [addDialogHandler, addCloseTrigger,addTrigger] = useDialog()
 
     const hideSidebarRight = () => {
@@ -37,42 +41,29 @@ export default function SidebarRight() {
         setIsOpen(true);
     }
 
-    const calculateSubTotal = () => {
-        let subTotal = 0;
-        cart.forEach((item) => {
-            subTotal += item.product_price * item.quantity;
-        });
-        setSubTotal(subTotal);
-    }
-
-    const calculateTotalBill = () => {
-        let totalBill = subTotal + tax;
-        setTotalBill(totalBill);
-    }
-
-    const setCurrentCart = () => {
-        let getCart = JSON.parse(localStorage.getItem('cart'));
-        if (getCart) {
-            setCart(getCart);
-        }else if (!getCart) {
-            localStorage.setItem('cart', JSON.stringify([]));
-            setCart([]);
-        }
-    }
-
+    // using useEffect to update subtotal, tax, and total bill
     useEffect(() => {
-        setCurrentCart();
-        calculateSubTotal();
-        calculateTotalBill();
-
-    }, [cart, subTotal, totalBill]);
+        let subTotals = 0;
+        let taxes = 0;
+        let totalBills = 0;
+        cart.forEach((item) => {
+            subTotals += item.product_price * item.quantity;
+        });
+        taxes = (subTotals * TAX_PERCENTAGE)/100;
+        totalBills = subTotals + tax;
+        setSubTotal(subTotals)
+        setTax(taxes);
+        setTotalBill(totalBills);
+    }, [cart, tax, subTotal, totalBill]);
 
     
     const addQuantity = (e,item) => {
         e.preventDefault();
         const cart = JSON.parse(localStorage.getItem('cart'));
         const index = cart.findIndex((cartItem) => cartItem.id === item.id);
-        cart[index].quantity += 1;
+        if(cart[index].quantity+1 <= cart[index].product_quantity){
+            cart[index].quantity += 1;
+        }
         localStorage.setItem('cart', JSON.stringify(cart));
         setCart(cart);
     }
@@ -91,28 +82,6 @@ export default function SidebarRight() {
         setCart(cart);
     }
 
-    const storePayment = (e) => {
-        e.preventDefault();
-        const data = {
-            'cart': cart,
-            'sub_total': subTotal,
-            'total_bill': totalBill,
-            'no_table': "1",
-            'tax_amount': tax,
-        }
-        Inertia.post(route('store.payment'), data);
-        //set cart to empty
-        localStorage.setItem('cart', JSON.stringify([]));
-        setCart([]);
-        //set subTotal to 0
-        setSubTotal(0);
-        //set totalBill to 0
-        setTotalBill(0);
-        //set tax to 0
-        setTax(0);
-
-    }
-
     const continuePayment = () => {
         hideSidebarRight();
         addDialogHandler();
@@ -121,7 +90,7 @@ export default function SidebarRight() {
     return (        
         <>
             <Dialog trigger={addTrigger} title="Order Summary"> 
-                <SummaryPurchases close={addCloseTrigger}/>
+                <SummaryPurchases close={addCloseTrigger} cart={cart} subTotal={subTotal} totalBill={totalBill} tax={tax} />
             </Dialog>        
             <aside className="sidenav sidenav-pos bg-default navbar navbar-vertical navbar-expand-xs navbar-expand-xs-pos border-0 border-radius-md fixed-end ms-4 " id="sidenav-main">
                 <div className="sidenav-header mt-2">
@@ -166,11 +135,19 @@ export default function SidebarRight() {
                                                 <span className="btn-inner-icon"><i className="fas fa-minus"></i></span>
                                             </button>
                                             <h3 className="quantity fs-6 pt-1" id='quantity'>{item.quantity}</h3>
-                                            <button className="btn btn-icon btn-primary py-2 m-0" type="button" onClick={
+                                            {item.quantity == item.product_quantity ? (
+                                            <button className="btn btn-icon btn-disabled py-2 m-0 disabled" type="button" onClick={
                                                                                                                 (e) => {addQuantity(e,item)}
                                                                                                                 }>
                                                 <span className="btn-inner-icon"><i className="fas fa-plus"></i></span>
                                             </button>
+                                            ) : (
+                                            <button className="btn btn-icon btn-primary py-2 m-0 " type="button" onClick={
+                                                                                                                (e) => {addQuantity(e,item)}
+                                                                                                                }>
+                                                <span className="btn-inner-icon"><i className="fas fa-plus"></i></span>
+                                            </button>
+                                            )}
                                         </div>
                                     </div>
                                 </li>
