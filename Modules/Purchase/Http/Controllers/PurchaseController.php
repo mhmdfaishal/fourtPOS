@@ -20,6 +20,7 @@ class PurchaseController extends Controller
      */
     public function index()
     {
+        abort_if(Gate::denies('show_purchases'), 403);
         $data = PurchaseResource::collection(Purchase::with('purchaseDetails')->where('user_id', auth()->user()->id)->latest()->paginate(10));
 
         return Inertia::render('Purchase/Index', ['purchases' => $data]);
