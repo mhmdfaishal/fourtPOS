@@ -3,6 +3,7 @@
 namespace Modules\Product\Http\Controllers;
 
 use Modules\Product\Http\Requests\ProductRequest;
+use Modules\Product\Http\Requests\EditProductRequest;
 use Modules\Product\Entities\Product;
 use Modules\Product\Entities\Category;
 use Illuminate\Support\Facades\Gate;
@@ -55,7 +56,6 @@ class ProductController extends Controller
     public function store(ProductRequest $request, Product $product)
     {
         // abort_if(Gate::denies('show_products'), 403);
-        // dd($request->all());
         $product->fill($request->only($product->getFillable()));
         $product->user_id = auth()->user()->id;
         $product->save();
@@ -101,12 +101,13 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ProductRequest $request, Product $product)
-    {
+    public function update(EditProductRequest $request, Product $product)
+    {;
         $product->fill($request->only($product->getFillable()));
         if($product->isDirty()) $product->save();
 
         if ($request->hasFile('image')) {
+            $product->clearMediaCollection(Product::IMAGE_COLLECTION);
             $product->addMedia($request->file('image'))->toMediaCollection(Product::IMAGE_COLLECTION);
         }
 

@@ -20,7 +20,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/create', [ProductController::class, 'create'])->name('product.create.form');
         Route::post('/create', [ProductController::class, 'store'])->name('product.create.store');
         Route::get('/{product}/update', [ProductController::class, 'edit'])->name('product.edit.form');
-        Route::put('/{product}/put', [ProductController::class, 'update'])->name('product.edit.post');
+        Route::post('/{product}/put', [ProductController::class, 'update'])->name('product.edit.post');
         Route::delete('/{product}/delete', [ProductController::class, 'destroy'])->name('product.delete');
     });
     Route::prefix('product_category')->group(function() {
