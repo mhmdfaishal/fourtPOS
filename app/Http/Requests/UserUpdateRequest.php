@@ -27,7 +27,7 @@ class UserUpdateRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => ['required', 'unique:users,email,' . optional($this->user)->id,],
-            'merchant_name' => 'string|max:255',
+            'merchant_name' => 'nullable|string|max:255',
             'user_role' => '',
             'is_active' => 'required',
         ];
