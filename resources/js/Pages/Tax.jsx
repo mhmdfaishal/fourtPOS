@@ -29,7 +29,7 @@ export default function Edit(props) {
                             <form onSubmit={onSubmit}>
                                 <div className="card-header pb-0">
                                     <div className="d-flex align-items-center">
-                                    <p className="mb-0">Edit Tax</p>
+                                    <p className="mb-0">Edit Tax ({tax}%)</p>
                                     <button type='submit' className="btn btn-teal-orange btn-sm ms-auto">Save</button>
                                     </div>
                                 </div>
