@@ -47,19 +47,20 @@ export default function CreatePurchase({close}) {
       setData({
         ...data,
         total_amount: subTotal,
+        products: [...formValues]
       })
     }
+
     function handleProductChange(i, e){
       let data = [...formValues]
       data[i][e.target.id] = e.target.value
       setFormValues(data)
       updateTotalAmount()
-      
     }
     const onSubmit = (e) => {
       e.preventDefault()
       let payload = {...data}
-      payload.products.push(...formValues)
+      payload.products = formValues
       setData(payload)
       post(route('purchase.create.store'), {
         data,
@@ -69,12 +70,6 @@ export default function CreatePurchase({close}) {
             quantity : "",
             price : ""
           }])
-          setData({
-            date: "",
-            total_amount: 0,
-            note: "",
-            products: [],
-          })
           reset(),
           close()
         },

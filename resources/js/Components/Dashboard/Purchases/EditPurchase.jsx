@@ -29,7 +29,6 @@ export default function EditPurchases({close, model}) {
             products : model.purchase_details 
         });
         setFormValues(model.purchase_details)
-        console.log(formValues)
     }, [model]);
     const onChange = (e) => {
         setData({ ...data, [e.target.id]: e.target.value })
@@ -44,22 +43,24 @@ export default function EditPurchases({close, model}) {
         setFormValues([...formValues, newField])
     }
 
-    function removeFields (index) {
-        const data = [...formValues];
-        data.splice(index, 1)
-        setFormValues(data)
-    }
-    function updateTotalAmount() {
-        const element = [...formValues]
+    function updateTotalAmount(payload = formValues) {
+        const element = payload
         let subTotal =  0
         element.map((item) => {
             subTotal += item.quantity * item.price
         })
-
+        
         setData({
             ...data,
             total_amount: subTotal,
+            products: element
         })
+    }
+    function removeFields (index) {
+        const data = [...formValues];
+        data.splice(index, 1)
+        setFormValues(data)
+        updateTotalAmount(data)
     }
     function handleProductChange(i, e){
         let data = [...formValues]
@@ -70,11 +71,7 @@ export default function EditPurchases({close, model}) {
     }
     const onSubmit = (e) => {
         e.preventDefault()
-        let payload = {...data}
-        payload.products = []
-        payload.products.push(...formValues)
-        setData(payload)
-        console.log(data)
+        updateTotalAmount()
         post(route('purchase.edit.post', model.id), {
             data,
             onSuccess: () => {
@@ -117,7 +114,7 @@ export default function EditPurchases({close, model}) {
                             {formValues?.map((formValue, index) => (
                             <div className='card mb-2'>
                               {
-                                index ? 
+                                formValues.length !== 1 ?
                               <div className="card-header p-0">
                                   <button type="button"  className="btn bg-gradient-danger btn-block px-2 py-1 m-0 align-self-end" onClick={() => removeFields(index)}>Remove</button> 
                               </div>
