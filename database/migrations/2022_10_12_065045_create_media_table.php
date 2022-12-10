@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigIncrements('id');
 
             $table->morphs('model');
-            $table->uuid('uuid',100)->nullable()->unique();
+            $table->uuid('uuid',100)->nullable();
             $table->string('collection_name');
             $table->string('name');
             $table->string('file_name');
