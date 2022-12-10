@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('guard_name');
             $table->timestamps();
 
-            $table->unique(['name', 'guard_name']);
+            // $table->unique(['name', 'guard_name']);
         });
 
         Schema::create($tableNames['roles'], function (Blueprint $table) {
@@ -35,7 +35,7 @@ return new class extends Migration
             $table->string('guard_name'); 
             $table->timestamps();
 
-            $table->unique(['name', 'guard_name']);
+            // $table->unique(['name', 'guard_name']);
         });
 
         Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames) {
