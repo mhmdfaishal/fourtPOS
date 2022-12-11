@@ -74,6 +74,6 @@ class PermissionsTableSeeder extends Seeder
         ]);
 
         $role->givePermissionTo($permissions);
-        $role->revokePermissionTo('access_user_management', 'create_pos_sales', 'access_currencies', 'create_currencies','edit_currencies','delete_currencies','access_settings');
+        $role->revokePermissionTo('access_user_management', 'create_pos_cashier', 'access_pos_cashier','access_currencies', 'create_currencies','edit_currencies','delete_currencies','access_settings');
     }
 }
