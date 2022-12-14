@@ -23,12 +23,12 @@ class LoginController extends Controller
         if(Auth::attempt($request->only('email', 'password'), $request->remember)) {
             session()->regenerate();
             $user = User::where('email' , $request->email)->first();
-            if ($user->hasRole('Cashier')) {
+            if (\strtolower($user->getRoleNames()->first()) == 'cashier') {
                 return redirect()->route('list.merchant')->with([
                     'type' => 'success',
                     'message' => 'You are logged in.'
                 ]);
-            } else if($user->hasRole('Super Admin')) {
+            } else if(\strtolower($user->getRoleNames()->first()) == 'super admin') {
                 return redirect()->route('users.index')->with([
                     'type' => 'success',
                     'message' => 'You are logged in.'
