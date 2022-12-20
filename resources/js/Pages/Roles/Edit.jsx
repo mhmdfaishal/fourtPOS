@@ -35,7 +35,7 @@ export default function Edit({close, role, permissions}) {
                 document.getElementById(permission).checked = true;
             }
         );
-    });
+    },[]);
 
     const checkAllPermissions = (e) => {
         if(e.target.checked){
